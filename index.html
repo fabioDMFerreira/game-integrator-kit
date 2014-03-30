@@ -1,14 +1,41 @@
 <html>
 	<head>
 		<title>GraveBall</title>
+		<link rel="stylesheet" type="text/css" href="css/styles.css" />
 	</head>
 	<body>
-		<script src="three.js"></script>
-		<script src="jquery.min.js"></script>
-		<span id="texto">texto</span> 
-		<div id="janelaJogo" style="border:1px solid black">
+		<script src="js/three.js"></script>
+		<script src="js/jquery.min.js"></script>
+		<div id="gameContainer">
 		</div>
-		<script src="TrackballControls.js"></script>
-		<script src="grave_ball.js"></script>
+		<div class="infoGame">
+			<div class="cronometro">
+			</div>
+			<div class="controls">
+				<ul>
+					<li>W-frente |</li>
+					<li>S-atr&aacute;s |</li>
+					<li>A-esquerda |</li>
+					<li>D-direita |</li>
+					<li>Espa&ccedil;o-saltar |</li>
+					<li>Setas direita esquerda - rodar |<li/>
+					<li>Setas frente atr&aacute;s - aproximar/afastar</li>
+				</ul>
+			</div>
+			<div class="pontuacao">
+			</div>
+		</div>
+		<div class="menu-container container">
+			<div class="info menu">
+				<h1 id="perdeste">Perdeste!!!</h1>
+				<h1 id="ganhaste">Ganhaste!!!</h1>
+				<ul>
+					<li id="continuar">Continuar</li>
+					<li id="novo_jogo">Novo jogo</li>
+				</ul>
+			</div>
+		</div>
+
+		<script src="grave.js"></script>
 	</body>
 </html>
