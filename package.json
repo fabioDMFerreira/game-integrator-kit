@@ -1,0 +1,30 @@
+{
+  "name": "graveball",
+  "version": "0.0.1",
+  "description": "A ball moving around platforms.",
+  "main": "app.js",
+  "scripts": {
+    "commit": "git-cz",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fabioDaFerreira/GraveBall.git"
+  },
+  "author": "martinhoferreira10@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fabioDaFerreira/GraveBall/issues"
+  },
+  "homepage": "https://github.com/fabioDaFerreira/GraveBall#readme",
+  "devDependencies": {
+    "commitizen": "2.9.5",
+    "cz-conventional-changelog": "1.2.0",
+    "gulp": "3.9.1",
+    "run-sequence": "1.2.2",
+    "wiredep": "4.0.0"
+  },
+  "czConfig": {
+    "path": "node_modules/cz-conventional-changelog"
+  }
+}

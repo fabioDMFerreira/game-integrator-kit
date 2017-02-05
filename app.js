@@ -3,13 +3,14 @@ path=require('path'),
 fs=require('fs');
 
 http.createServer(function(req,res){
-	var filePath='.'+req.url;
-	
-	if(filePath == "./"){
-		filePath='./index.html';
+	var filePath='./app'+req.url;
+	if(filePath == "./app/"){
+		filePath='./app/index.html';
 	}
 	
-	path.exists(filePath,function(exists){
+	console.log(filePath);
+
+	fs.exists(filePath,function(exists){
 		if(exists){
 			fs.readFile(filePath,function(err,content){
 				if(err){
