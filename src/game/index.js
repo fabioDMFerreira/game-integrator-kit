@@ -14,7 +14,7 @@ export default class Game{
         this.store = createStore(state,devToolsEnhancer());
         this.countdown = new Countdown(this.store,this.endOfGame);
         this.keyboard = new Keyboard(this.toggleStartGame.bind(this));
-        this.engine = new Engine(this.keyboard.keysPressed);
+        this.engine = new Engine(this.keyboard.keysPressed,this);
     }
 
     endOfGame(result){

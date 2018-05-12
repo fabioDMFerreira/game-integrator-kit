@@ -1,15 +1,16 @@
 import jQuery from 'jquery';
 import * as THREE from 'three';
 
+import {Plate, CubeObj, BallObj} from './factory';
+
 import ballTexture from './images/ball.jpg';
 import boxTexture from './images/box.jpg';
 import streetTexture from './images/street.jpg';
 import brickTexture from './images/brick.jpg';
 import brightSquaresTexture from './images/bright_squares256.png';
 
-import {game} from '../index';
-
-var camera, 
+var camera,
+	game,
 	scene, 
 	renderer,
 	keyboard=[],
@@ -43,7 +44,6 @@ rays.down=[		new THREE.Vector3(0,-1,0),
 				new THREE.Vector3(1,-1,-1),
 				new THREE.Vector3(1,-1,1)
 ];
-
 rays.a=[	new THREE.Vector3(0,1,0),
 			new THREE.Vector3(1,0,0),//diretamente para a esquerda
 			//new THREE.Vector3(1,1,0),
@@ -97,19 +97,8 @@ rays.s=[	new THREE.Vector3(0,1,0),
 			//new THREE.Vector3(1,-1,-1)		
 ];
 
-	//Codigo de objetos
-	var Plate=function(Z,Y,X,atrito,texture){
-		var z= Z || 100;
-		var y= Y || 100;
-		var x= X|| 100;
 
-		var obj=new THREE.Mesh(new THREE.BoxGeometry(z, y, x),new THREE.MeshLambertMaterial({map:new THREE.TextureLoader().load(texture)}));
-    	obj.receiveShadow=true;
-		obj.aplicaAtrito=atrito;
-		return obj;
-	};
-
-	var coisasFisica=function(obj,Radius,maxVel,rot){
+export const coisasFisica=function(obj,Radius,maxVel,rot){
 		obj.Radius=Radius;
 		obj.translation={};
 		obj.translation.z=new THREE.Vector3(0,0,1);
@@ -423,17 +412,20 @@ rays.s=[	new THREE.Vector3(0,1,0),
 		};
 	}
 
-	function WORLD(){
-		this.app="GraveBall :)";
-		this.gravity=0.5;		
-	
-		var orderRotation='XYZ';
+	class WORLD{
 
-		this.setObject=function(obj){
+		constructor(){
+			this.app="GraveBall :)";
+			this.gravity=0.5;		
+		
+			this.orderRotation='XYZ';
+		}
+
+		setObject(obj){
 			this.Obj=obj;
 		}
 
-		this.updateVelocity=function(){
+		updateVelocity(){
 				if(this.Obj.Falling){
 		    		this.Obj.addAccelarationY(this.gravity);
 		    	}
@@ -464,7 +456,7 @@ rays.s=[	new THREE.Vector3(0,1,0),
 		    	}
 		}
 
-		this.cleanKeyboardKey=function(id){
+		cleanKeyboardKey(id){
 			var idSpl=id.split("");
 				for(var x in idSpl){
 					if(keyboard[parseInt(idSpl[x].charCodeAt(0))]){
@@ -473,7 +465,7 @@ rays.s=[	new THREE.Vector3(0,1,0),
 			}
 		}
 
-		this.fimJogo=function(){
+		fimJogo(){
 			if(this.Obj.position.y<-100){
 				game.endOfGame();
 			}
@@ -482,13 +474,13 @@ rays.s=[	new THREE.Vector3(0,1,0),
 			}
 		}
 
-		this.moves=function(keyboard){
+		moves(keyboard){
 			if(!this.Obj.Falling && keyboardStatus){	
 				if(keyboard[87] && this.Obj.moveFlag.w){//W
 					//this.Obj.addAccelarationZ(0.4);
 					this.Obj.addAccelarationZ(Math.sin(Math.PI+anguloCamera)*0.4);
 					this.Obj.addAccelarationX(-Math.cos(Math.PI+anguloCamera)*0.4);
-					orderRotation='XYZ';
+					this.orderRotation='XYZ';
 					this.Obj.moveFlag.d=true;
 		    		this.Obj.moveFlag.s=true;
 		    		this.Obj.moveFlag.a=true;
@@ -497,7 +489,7 @@ rays.s=[	new THREE.Vector3(0,1,0),
 		    		//this.Obj.addAccelarationZ(-0.4);
 		    		this.Obj.addAccelarationZ(-Math.sin(Math.PI+anguloCamera)*0.4);
 					this.Obj.addAccelarationX(Math.cos(Math.PI+anguloCamera)*0.4);
-		    		orderRotation='XYZ';
+		    		this.orderRotation='XYZ';
 		    		this.Obj.moveFlag.w=true;
 		    		this.Obj.moveFlag.d=true;
 		    		this.Obj.moveFlag.a=true;
@@ -506,7 +498,7 @@ rays.s=[	new THREE.Vector3(0,1,0),
 		    		//this.Obj.addAccelarationX(0.4);
 		    		this.Obj.addAccelarationZ(-Math.sin(Math.PI/2+anguloCamera)*0.4);
 					this.Obj.addAccelarationX(Math.cos(Math.PI/2+anguloCamera)*0.4);
-		    		orderRotation='ZYX';
+		    		this.orderRotation='ZYX';
 		    		this.Obj.moveFlag.w=true;
 		    		this.Obj.moveFlag.s=true;
 		    		this.Obj.moveFlag.d=true;
@@ -515,7 +507,7 @@ rays.s=[	new THREE.Vector3(0,1,0),
 		    		//this.Obj.addAccelarationX(-0.4);
 		    		this.Obj.addAccelarationZ(Math.sin(Math.PI/2+anguloCamera)*0.4);
 					this.Obj.addAccelarationX(-Math.cos(Math.PI/2+anguloCamera)*0.4);
-		    		orderRotation='ZYX';
+		    		this.orderRotation='ZYX';
 		    		this.Obj.moveFlag.w=true;
 		    		this.Obj.moveFlag.s=true;
 		    		this.Obj.moveFlag.a=true;
@@ -541,7 +533,7 @@ rays.s=[	new THREE.Vector3(0,1,0),
 	    		distanciaCamera+=5;
 	    	}
 
-	    	this.Obj.updateRotationOrder(orderRotation);
+	    	this.Obj.updateRotationOrder(this.orderRotation);
 
 	    	this.updateVelocity();	    	
 
@@ -552,27 +544,7 @@ rays.s=[	new THREE.Vector3(0,1,0),
 
 	}
 
-	var BallObj=function(radius){
-		//construtor
-		var material= new THREE.MeshLambertMaterial({map:new THREE.TextureLoader().load(ballTexture)});
-		var obj = new THREE.Mesh(new THREE.SphereGeometry(radius,50, 50), material);
-		obj.castShadow=true;
-		obj.structure="ball";
-		coisasFisica(obj,radius,1000,true);//obj, distancia dos Radiuss de colisao, velocidade maxima, se roda ao mover-se
-
-		return obj;
-	};
-
-	var CubeObj=function(x,y,z){
-		//construtor
-		var obj=new THREE.Mesh(new THREE.BoxGeometry(x,y,z), new THREE.MeshLambertMaterial({map:new THREE.TextureLoader().load(boxTexture)}));
-		obj.castShadow=true;
-		obj.structure="cube";
-
-		coisasFisica(obj,x/2,30,false);//obj, distancia dos Radiuss de colisao, velocidade maxima, se roda ao mover-se
-
-		return obj;
-	};
+	
 
 	var world=new WORLD();
 
@@ -742,7 +714,8 @@ rays.s=[	new THREE.Vector3(0,1,0),
 
 export default class GameEngine{
 
-	constructor(keysPressed){
+	constructor(keysPressed,instanceGame){
+		game = instanceGame;
 		keyboard = keysPressed;
 	}
 
