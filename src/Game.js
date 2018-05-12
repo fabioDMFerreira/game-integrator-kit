@@ -1,14 +1,27 @@
 import React,{Component} from 'react';
+import ResizeAware from 'react-resize-aware';
 
-import GameEngine from './game/grave';
+import './Game.css';
+
+import {game} from './index';
 
 export default class Game extends Component{
 
+    resize({width,height}){
+        console.log('size',width,height)
+        game.setGameSize(width,height)
+    }
+
     componentDidMount(){
-        GameEngine.load(this.refs.gameContainer);
+        game.engine.load(this.refs.gameContainer)
     }
 
     render(){
-        return <div ref="gameContainer"></div>;
+        return <ResizeAware 
+        id="gameContainer"
+        onResize = {this.resize}
+        >
+        <div  ref="gameContainer"></div>
+           </ResizeAware> ;
     }
 }

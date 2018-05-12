@@ -1,45 +1,36 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
 import './App.css';
 
-import Game from './Game';
 
-class App extends Component {
+import Game from './Game';
+import Menu from './Menu';
+import GameStatus from './GameStatus';
+
+
+export class App extends Component {
+
+
   render() {
     return (
       <div className="App">
+
         <Game />
-        <div id="gameContainer">
-        </div>
-        <div className="infoGame">
-          <div className="cronometro">
-          </div>
-          <div className="controls">
-            <ul>
-              <li>W-frente |</li>
-              <li>S-atr&aacute;s |</li>
-              <li>A-esquerda |</li>
-              <li>D-direita |</li>
-              <li>Espa&ccedil;o-saltar |</li>
-              <li>Setas direita esquerda - rodar |</li>
-              <li>Setas frente atr&aacute;s - aproximar/afastar</li>
-            </ul>
-          </div>
-          <div className="pontuacao">
-          </div>
-        </div>
-        <div className="menu-container container">
-          <div className="info menu">
-            <h1 id="perdeste">Perdeste!!!</h1>
-            <h1 id="ganhaste">Ganhaste!!!</h1>
-            <ul>
-              <li id="continuar">Continuar</li>
-              <li id="novo_jogo">Novo jogo</li>
-            </ul>
-          </div>
-        </div>
+
+        <GameStatus />
+        
+        {this.props.showMenu && <Menu />}
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = function(state){
+  const showMenu = state.get('showMenu');
+
+  return {
+    showMenu
+  };
+}
+
+export default connect(mapStateToProps)(App);

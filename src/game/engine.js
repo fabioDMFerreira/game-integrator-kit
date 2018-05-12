@@ -7,12 +7,9 @@ import streetTexture from './images/street.jpg';
 import brickTexture from './images/brick.jpg';
 import brightSquaresTexture from './images/bright_squares256.png';
 
+import {game} from '../index';
 
-// const THREE = global.THREE
-
-var width=window.innerWidth,
-	height=window.innerHeight,
-	camera, 
+var camera, 
 	scene, 
 	renderer,
 	keyboard=[],
@@ -21,7 +18,6 @@ var width=window.innerWidth,
 	objMovable=[],
 	objCatchable=[],
 	requestAnimationId,
-	tempo=100,
 	anguloCamera=3/2*Math.PI,
 	distanciaCamera=500;
 
@@ -100,44 +96,6 @@ rays.s=[	new THREE.Vector3(0,1,0),
 			//new THREE.Vector3(1,1,-1),
 			//new THREE.Vector3(1,-1,-1)		
 ];
-
-
-	//Codigo para detectar eventos como keystrokes e window resize
-
-	document.addEventListener( 'keydown', onDocumentKeyDown, false );
-	document.addEventListener( 'keyup', onDocumentKeyUp, false );
-    window.addEventListener( 'resize', onWindowResize, false );
-
-	function onDocumentKeyDown(event){
-		if(event.keyCode===27){
-			keyboardStatus=!keyboardStatus;
-			if(keyboardStatus){
-				esconderMenu();
-				render();
-			}
-			else{
-				cancelAnimationFrame(requestAnimationId);
-				mostrarMenu();
-			}
-		};
-		if(keyboardStatus){
-			keyboard[event.keyCode]="pressed";
-		}
-    }
-
-
-	function onDocumentKeyUp(event){
-		keyboard[event.keyCode]="";
-    }
-
-
-	function onWindowResize(){
-	    camera.aspect = window.innerWidth / window.innerHeight;
-	    camera.updateProjectionMatrix();
-	    renderer.setSize( window.innerWidth, window.innerHeight );
-
-	}
-
 
 	//Codigo de objetos
 	var Plate=function(Z,Y,X,atrito,texture){
@@ -517,10 +475,10 @@ rays.s=[	new THREE.Vector3(0,1,0),
 
 		this.fimJogo=function(){
 			if(this.Obj.position.y<-100){
-				fimJogo(0);
+				game.endOfGame();
 			}
 			if(objCatchable.length===0){
-				fimJogo(1);
+				game.endOfGame(1);
 			}
 		}
 
@@ -583,9 +541,6 @@ rays.s=[	new THREE.Vector3(0,1,0),
 	    		distanciaCamera+=5;
 	    	}
 
-
-
-
 	    	this.Obj.updateRotationOrder(orderRotation);
 
 	    	this.updateVelocity();	    	
@@ -619,25 +574,17 @@ rays.s=[	new THREE.Vector3(0,1,0),
 		return obj;
 	};
 
-
-
-	
-
-
-	//Codigo
-
 	var world=new WORLD();
 
-	function init(){
+	function init(element){
 		renderer=new THREE.WebGLRenderer({antialias:true});
-		renderer.setSize(width,height);
 		renderer.setClearColor(0xEEEEEE, 1.0);
       	renderer.clear();
       	renderer.shadowMap.enabled=true;
       	renderer.shadowMapSoft=true;
       	renderer.antialias=true;
       	renderer.shadowMapAutoUpdate=true;
-		jQuery("#gameContainer").append(renderer.domElement);
+		element.append(renderer.domElement);
 		
 		scene=new THREE.Scene(); //onde se insere a lista de objetos a mostrar
 
@@ -715,7 +662,7 @@ rays.s=[	new THREE.Vector3(0,1,0),
 
 
 		// add catchable objects
-		for(var i=0;i<10;i++){
+		for(var i=0;i<1;i++){
 			var material= new THREE.MeshLambertMaterial({map:new THREE.TextureLoader().load(ballTexture)});
 			var gift = new THREE.Mesh(new THREE.SphereGeometry(50,50, 50), material);
 			gift.position.z=Math.floor((10000*Math.random()) - 5000);
@@ -780,110 +727,42 @@ rays.s=[	new THREE.Vector3(0,1,0),
 		var skybox = new THREE.Mesh(skyboxGeometry, skyboxMaterial);
  
 		scene.add(skybox);
-
-
-
-		//Camera
-		camera=new THREE.PerspectiveCamera(45,width/height,1,1000000);
 	}
 
 	function render(){
 		world.moves(keyboard);
-		camera.position.set(-distanciaCamera*Math.cos(anguloCamera),200,distanciaCamera*Math.sin(anguloCamera));
-		camera.position.add(world.Obj.position);
-		camera.lookAt(world.Obj.position);
-		renderer.render(scene,camera);
+		if(camera){
+			camera.position.set(-distanciaCamera*Math.cos(anguloCamera),200,distanciaCamera*Math.sin(anguloCamera));
+			camera.position.add(world.Obj.position);
+			camera.lookAt(world.Obj.position);
+			renderer.render(scene,camera);
+		}
 		requestAnimationId=requestAnimationFrame(render);
 	}
 
+export default class GameEngine{
 
-	var cronometro;
-
-	function iniciarCronometro(){
-		cronometro=setInterval(function(){
-			tempo--;
-			jQuery(".cronometro").html(tempo);
-			if(tempo===0){
-				fimJogo(0);
-			}
-		},1000);
+	constructor(keysPressed){
+		keyboard = keysPressed;
 	}
 
-	function esconderMenu(){
-		jQuery(".menu").hide();
-		jQuery(".menu-container").hide();
-		iniciarCronometro();
+	load(element){
+		init(element);
+		game.start();
 	}
 
-	function mostrarMenu(){
-		jQuery(".menu").show();
-		jQuery(".menu-container").show();
-		clearInterval(cronometro);
-	}
-
-	jQuery("#continuar").click(function(){
-		esconderMenu();
-		keyboardStatus=true;
+	render(){
 		render();
-	});
+	}
 
-	jQuery("#novo_jogo").click(function(){
-		esconderMenu();
-		keyboardStatus=true;
-		window.location.reload();
-		//cancelAnimationFrame(requestAnimationId);
-		//init();
-		//render();
-	});
-
-	jQuery("#reiniciar").click(function(){
-		esconderMenu();
-		keyboardStatus=true;
-	});
-
-	function fimJogo(resultado){
-		keyboardStatus=!keyboardStatus;
-		if(resultado){
-			jQuery("#ganhaste").show();
-		}
-		else{
-			jQuery("#perdeste").show();
-		}
-		jQuery("#continuar").hide();
-		mostrarMenu();
+	stopRender(){
 		cancelAnimationFrame(requestAnimationId);
 	}
 
-const gameEngine = {
-	load:(element)=>{
-		init();
-		render();
-		iniciarCronometro();
-		// var scene = new THREE.Scene();
-		// 	var camera = new THREE.PerspectiveCamera( 75, width/height, 0.1, 1000 );
-
-		// 	var renderer = new THREE.WebGLRenderer();
-		// 	renderer.setSize( width, height );
-		// 	jQuery("#gameContainer").append( renderer.domElement );
-
-		// 	var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-		// 	var material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
-		// 	var cube = new THREE.Mesh( geometry, material );
-		// 	scene.add( cube );
-
-		// 	camera.position.z = 5;
-
-		// 	var animate = function () {
-		// 		requestAnimationFrame( animate );
-
-		// 		cube.rotation.x += 0.1;
-		// 		cube.rotation.y += 0.1;
-
-		// 		renderer.render(scene, camera);
-		// 	};
-
-		// 	animate();
+	setSize(width,height){
+		camera=new THREE.PerspectiveCamera(45,width/height,1,1000000);
+		camera.aspect = window.innerWidth / window.innerHeight;
+	    camera.updateProjectionMatrix();
+		renderer.setSize(width,height);
 	}
 };
-
-export default gameEngine;;
