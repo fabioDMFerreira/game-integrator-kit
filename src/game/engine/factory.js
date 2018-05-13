@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-import {coisasFisica} from './index';
+import applyPhysicsRules from './applyPhysicsRules';
 
 import ballTexture from './images/ball.jpg';
 import boxTexture from './images/box.jpg';
@@ -19,12 +19,12 @@ export class Plate{
 }
 
 export class BallObj{
-    constructor(radius){
+    constructor(radius,objMovable,platform,objCatchable,scene){
         var material= new THREE.MeshLambertMaterial({map:new THREE.TextureLoader().load(ballTexture)});
         var obj = new THREE.Mesh(new THREE.SphereGeometry(radius,50, 50), material);
         obj.castShadow=true;
         obj.structure="ball";
-        coisasFisica(obj,radius,1000,true);//obj, distancia dos Radiuss de colisao, velocidade maxima, se roda ao mover-se
+        applyPhysicsRules(obj,radius,1000,true,objMovable,platform,objCatchable,scene);//obj, distancia dos Radiuss de colisao, velocidade maxima, se roda ao mover-se
     
         return obj;
     }
@@ -37,7 +37,7 @@ export class CubeObj{
         obj.castShadow=true;
         obj.structure="cube";
     
-        coisasFisica(obj,x/2,30,false);//obj, distancia dos Radiuss de colisao, velocidade maxima, se roda ao mover-se
+        applyPhysicsRules(obj,x/2,30,false);//obj, distancia dos Radiuss de colisao, velocidade maxima, se roda ao mover-se
     
         return obj;
     }
