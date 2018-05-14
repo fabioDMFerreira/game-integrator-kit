@@ -1,9 +1,9 @@
 import React,{Component} from 'react';
-
+import {connect} from 'react-redux';
 import Countdown from './Countdown';
 import './GameStatus.css';
 
-export default class GameStatus extends Component{
+export class GameStatus extends Component{
     render(){
         return <div className="infoGame">
         <Countdown />
@@ -18,8 +18,15 @@ export default class GameStatus extends Component{
             <li>Setas frente atr&aacute;s - aproximar/afastar</li>
           </ul>
         </div>
-        <div className="pontuacao">
+        <div>
+          Items to catch: {this.props.numberOfCatchables}
         </div>
       </div>
     }
 }
+
+const mapStateToProps = state => ({
+  numberOfCatchables:state.get('numberOfCatchables')
+});
+
+export default connect(mapStateToProps)(GameStatus);

@@ -13,7 +13,7 @@ export default class Game extends Component{
     }
 
     componentDidMount(){
-        game.engine.load(this.refs.gameContainer)
+        game.init(this.refs.gameContainer)
     }
 
     render(){

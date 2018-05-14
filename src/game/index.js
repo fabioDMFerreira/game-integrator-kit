@@ -6,6 +6,7 @@ import Engine from './engine';
 
 import Countdown from './countdown';
 import Keyboard from './keyboard';
+import Catchables from './catchables';
 
 import { startGame, stopGame, continueGame, gameWon, gameLost } from './state/gameStatus';
 
@@ -13,19 +14,25 @@ export default class Game {
     constructor() {
         this.store = createStore(state, devToolsEnhancer());
         this.countdown = new Countdown(this.store, this.endOfGame);
+        this.catchables = new Catchables(this.store);
         this.keyboard = new Keyboard(this.toggleStartGame.bind(this));
-        this.engine = new Engine(this.keyboard.keysPressed, this);
+        this.engine = new Engine(this.keyboard.keysPressed, this.endOfGame.bind(this),this.catchables);
     }
 
     endOfGame(result) {
         result ? this.won() : this.lost();
     }
 
+    init(element){
+        this.engine.load(element);
+        this.start();
+    }
+
     start() {
         this.store.dispatch(startGame());
         this.engine.render();
-        this.countdown.setTime(300);
-        this.countdown.start();
+        // this.countdown.setTime(300);
+        // this.countdown.start();
     }
 
     stop() {
