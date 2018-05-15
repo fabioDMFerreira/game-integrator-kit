@@ -3,17 +3,17 @@ import ResizeAware from 'react-resize-aware';
 
 import './Game.css';
 
-import {game} from './index';
+import {kit} from './index';
 
 export default class Game extends Component{
 
     resize({width,height}){
         console.log('size',width,height)
-        game.setGameSize(width,height)
+        kit.setGameContainerSize(width,height)
     }
 
     componentDidMount(){
-        game.init(this.refs.gameContainer)
+        kit.init(this.refs.gameContainer)
     }
 
     render(){

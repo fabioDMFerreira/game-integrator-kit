@@ -114,8 +114,6 @@ export default class World {
             }
         }
 
-    
-
         this.Obj.updateRotationOrder(this.orderRotation);
 
         this.updateVelocity();

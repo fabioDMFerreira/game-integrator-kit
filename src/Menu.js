@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
 
-import {game} from './index';
+import {kit} from './index';
 
 import './Menu.css';
 
@@ -12,8 +12,8 @@ export class Menu extends Component{
           {this.props.gameLost && <h1 id="perdeste">Perdeste!!!</h1>}
           {this.props.gameWon && <h1 id="ganhaste">Ganhaste!!!</h1>}
           <ul>
-            {this.props.gameStopped && <li id="continuar" onClick={game.continue.bind(game)}>Continuar</li>}
-            <li id="novo_jogo" onClick={game.reload}>Novo jogo</li>
+            {this.props.gameStopped && <li id="continuar" onClick={kit.continue.bind(kit)}>Continuar</li>}
+            <li id="novo_jogo" onClick={kit.reload}>Novo jogo</li>
           </ul>
         </div>
       </div>

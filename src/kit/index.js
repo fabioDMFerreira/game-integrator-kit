@@ -8,15 +8,19 @@ import Countdown from './countdown';
 import Keyboard from './keyboard';
 import Catchables from './catchables';
 
+import Graveball from './game/graveball';
+
 import { startGame, stopGame, continueGame, gameWon, gameLost } from './state/gameStatus';
 
-export default class Game {
+export default class Kit {
     constructor() {
         this.store = createStore(state, devToolsEnhancer());
-        this.countdown = new Countdown(this.store, this.endOfGame);
+        this.countdown = new Countdown(this.store, this.endOfGame.bind(this));
         this.catchables = new Catchables(this.store);
         this.keyboard = new Keyboard(this.toggleStartGame.bind(this));
-        this.engine = new Engine(this.keyboard.keysPressed, this.endOfGame.bind(this),this.catchables);
+        this.game = new Graveball(this.keyboard.keysPressed, this.endOfGame.bind(this),this.catchables);
+        this.engine = new Engine(this.game);
+
     }
 
     endOfGame(result) {
@@ -25,14 +29,16 @@ export default class Game {
 
     init(element){
         this.engine.load(element);
+        this.game.load();
+        this.game.objects.forEach(element=>this.engine.scene.add(element));
         this.start();
     }
 
     start() {
         this.store.dispatch(startGame());
         this.engine.render();
-        // this.countdown.setTime(300);
-        // this.countdown.start();
+        this.countdown.setTime(300);
+        this.countdown.start();
     }
 
     stop() {
@@ -71,7 +77,7 @@ export default class Game {
         window.location.reload();
     }
 
-    setGameSize(width, height) {
+    setGameContainerSize(width, height) {
         this.engine.setSize(width, height);
     }
 
