@@ -1,34 +1,48 @@
-import React, { Component } from 'react';
-import {connect} from 'react-redux';
+import { Map } from 'immutable';
+import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import Game from './Game';
 import Menu from './Menu';
 import GameStatus from './GameStatus';
 
-export class App extends Component {
+const App = (kit) => {
+	function mapStateToProps(state) {
+		let showMenu;
 
-  render() {
-    return (
-      <div className="App">
+		if (Map.isMap(state)) {
+			showMenu = state.get('showMenu');
+		}
 
-        <Game kit={this.props.kit} />
+		return {
+			showMenu,
+		};
+	}
 
-        <GameStatus />
-        
-        {this.props.showMenu && <Menu kit={this.props.kit}/>}
+	const continueGame = () => kit.continue.apply(kit),
+		loadGame = element => kit.load.call(kit, element),
+		setGameSize = (width, height) => kit.setGameContainerSize.call(kit, width, height),
+		{ reload } = kit,
+		Component = props =>
+			(
+				<div className="App">
+					<Game load={loadGame} setSize={setGameSize} />
+					<GameStatus />
+					{props.showMenu && <Menu continue={continueGame} reload={reload} />}
+				</div>
+			),
+		connectedComponent = connect(mapStateToProps)(Component);
 
-      </div>
-    );
-  }
+	Component.propTypes = {
+		showMenu: PropTypes.bool,
+	};
 
-}
+	Component.defaultProps = {
+		showMenu: false,
+	};
 
-const mapStateToProps = function(state){
-  const showMenu = state.get('showMenu');
+	return connectedComponent;
+};
 
-  return {
-    showMenu
-  };
-}
-
-export default connect(mapStateToProps)(App);
+export default App;

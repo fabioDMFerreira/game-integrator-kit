@@ -1,20 +1,33 @@
-import React,{Component} from 'react';
-import {connect} from 'react-redux';
+import { Map } from 'immutable';
+import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-export class Countdown extends Component{
-    render(){
-        return <div className="cronometro">
-            {this.props.countdownTime}
-        </div>
-    }
+export const Countdown = props => (
+	<div className="cronometro">
+		{props.countdownTime}
+	</div>
+);
+
+
+Countdown.propTypes = {
+	countdownTime: PropTypes.number,
 };
 
-const mapStateToProps=(state)=>{
-    const countdownTime = state.get('countdownTime');
-
-    return {
-        countdownTime
-    }
+Countdown.defaultProps = {
+	countdownTime: 0,
 };
+
+function mapStateToProps(state) {
+	let countdownTime;
+
+	if (Map.isMap(state)) {
+		countdownTime = state.get('countdownTime');
+	}
+
+	return {
+		countdownTime,
+	};
+}
 
 export default connect(mapStateToProps)(Countdown);

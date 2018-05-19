@@ -1,1 +1,1 @@
-export {default} from './GameStatus';
+export { default } from './GameStatus';

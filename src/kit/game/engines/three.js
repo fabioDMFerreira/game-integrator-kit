@@ -2,7 +2,6 @@ import * as THREE from 'three';
 import Game from '../index';
 
 export default class ThreeEngine extends Game {
-
 	constructor() {
 		super();
 		this.renderer = this.buildRender();
@@ -69,5 +68,4 @@ export default class ThreeEngine extends Game {
 		renderer.shadowMapAutoUpdate = true;
 		return renderer;
 	}
-
 }

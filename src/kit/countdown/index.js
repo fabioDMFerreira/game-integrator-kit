@@ -1,51 +1,49 @@
-import {startCountdown,stopCountdown,continueCountdown,setCountdownTime,decrementCountdownTime} from './state';
+import { startCountdown, stopCountdown, continueCountdown, setCountdownTime, decrementCountdownTime } from './state';
 
-export default class Coundown{
+export default class Coundown {
+	constructor(store, endOfGame) {
+		this.store = store;
+		this.endOfGame = endOfGame;
+	}
 
-    constructor(store,endOfGame){
-        this.store=store;
-        this.endOfGame=endOfGame;
-    }
+	setTime(time) {
+		this.store.dispatch(setCountdownTime(time));
+	}
 
-    setTime(time){
-        this.store.dispatch(setCountdownTime(time));
-    }
+	decrement() {
+		const state = this.store.getState(),
+			countdownTime = state.get('countdownTime'),
+			countdownStopped = state.get('countdownStopped');
 
-    decrement(){
+		if (countdownStopped) {
+			return;
+		}
 
-        const state = this.store.getState(),
-             countdownTime = state.get('countdownTime'),
-            countdownStopped = state.get('countdownStopped');
+		this.store.dispatch(decrementCountdownTime());
 
-        if(countdownStopped){
-            return;
-        }
+		if (!countdownTime) {
+			this.endOfGame();
+		}
 
-        this.store.dispatch(decrementCountdownTime());
+		setTimeout(() => {
+			this.decrement();
+		}, 1000);
+	}
 
-        if(!countdownTime){
-            this.endOfGame();
-        }
+	start() {
+		if (!this.store.getState().get('countdownTime')) {
+			console.warn('Time of countdown should be set before its start');
+		}
+		this.store.dispatch(startCountdown());
+		this.decrement();
+	}
 
-        setTimeout(()=>{
-            this.decrement();
-        },1000);
-    }
+	continue() {
+		this.store.dispatch(continueCountdown());
+		this.decrement();
+	}
 
-    start(){
-        if(!this.store.getState().get('countdownTime')){
-            console.warn('Time of countdown should be set before its start');
-        }
-        this.store.dispatch(startCountdown());
-        this.decrement();
-    }
-
-    continue(){
-        this.store.dispatch(continueCountdown());
-        this.decrement();
-    }
-
-    stop(){
-        this.store.dispatch(stopCountdown());
-    }
+	stop() {
+		this.store.dispatch(stopCountdown());
+	}
 }

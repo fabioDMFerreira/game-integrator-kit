@@ -1,30 +1,38 @@
-import React,{Component} from 'react';
+import React, { Component } from 'react';
 import ResizeAware from 'react-resize-aware';
+import PropTypes from 'prop-types';
 
 import './Game.css';
 
-export default class Game extends Component{
+class Game extends Component {
+	constructor() {
+		super();
+		this.resize = this.resize.bind(this);
+	}
 
-    constructor(){
-        super();
-        this.resize = this.resize.bind(this);
-    }
+	componentDidMount() {
+		this.props.load(this.gameContainer);
+	}
 
-    resize({width,height}){
-        console.log('size',width,height)
-        this.props.kit.setGameContainerSize(width,height)
-    }
+	resize({ width, height }) {
+		this.props.setSize(width, height);
+	}
 
-    componentDidMount(){
-        this.props.kit.load(this.refs.gameContainer)
-    }
-
-    render(){
-        return <ResizeAware 
-        id="gameContainer"
-        onResize = {this.resize}
-        >
-        <div  ref="gameContainer"></div>
-           </ResizeAware> ;
-    }
+	render() {
+		return (
+			<ResizeAware
+				id="gameContainer"
+				onResize={this.resize}
+			>
+				<div ref={(thisHtmlElement) => { this.gameContainer = thisHtmlElement; }} />
+			</ResizeAware>
+		);
+	}
 }
+
+Game.propTypes = {
+	setSize: PropTypes.func.isRequired,
+	load: PropTypes.func.isRequired,
+};
+
+export default Game;
