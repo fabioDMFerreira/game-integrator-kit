@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-import Game from '../index';
+import Engine from '../engines/three';
 import buildWorldObjects from './buildWorldObjects';
 
 import { CubeObj, BallObj } from './factory';
@@ -11,7 +11,7 @@ let anguloCamera = 3 / 2 * Math.PI,
     distanciaCamera = 500,
     keyboardStatus = true;
 
-export default class Graveball extends Game {
+export default class Graveball extends Engine {
 
     constructor(keyboard, finishGame, catchables) {
         super();
@@ -21,20 +21,15 @@ export default class Graveball extends Game {
         this.keyboard = keyboard;
         this.finishGame = finishGame;
         this.catchables = catchables;
-    }
 
-    setCamera(camera) {
-        this.camera = camera;
-    }
-
-    setScene(scene) {
-        this.scene = scene;
+        this.load();
+        this.subscribeRender(this.applyControls.bind(this));
     }
 
     generateGifts() {
         var ray = new THREE.Raycaster();
 
-        for (var i = 0; i < 1; i++) {
+        for (var i = 0; i < 10; i++) {
             var material = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load(ballTexture) });
             var gift = new THREE.Mesh(new THREE.SphereGeometry(50, 50, 50), material);
             gift.position.z = Math.floor((10000 * Math.random()) - 5000);
@@ -63,7 +58,7 @@ export default class Graveball extends Game {
 
     load() {
         this.objects = buildWorldObjects(this.platform);
-        const ball = new BallObj(50, this.objMovable, this.platform, this.gifts, this.scene);
+        const ball = new BallObj(50, this.objMovable, this.platform, this.gifts, this.scene,this.catchables);
         ball.position.set(0, 500, 0);
 
         this.objects.push(ball);
@@ -90,11 +85,13 @@ export default class Graveball extends Game {
         this.generateGifts();
 
 
-        this.world = new World(keyboardStatus, anguloCamera, this.objMovable, this.keyboard, this.finishGame, this.gifts);
+        this.world = new World(keyboardStatus, anguloCamera, this.objMovable, this.keyboard, this.finishGame, this.gifts, this.catchables);
         this.world.setObject(ball);
+
+        this.objects.forEach(element=>this.scene.add(element));
     }
 
-    onRender() {
+    applyControls() {
         if(!this.world){
             return;
         }

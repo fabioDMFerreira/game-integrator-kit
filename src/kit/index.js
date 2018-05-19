@@ -2,8 +2,6 @@ import state from './state';
 import { createStore } from 'redux';
 import { devToolsEnhancer } from 'redux-devtools-extension';
 
-import Engine from './engine';
-
 import Countdown from './countdown';
 import Keyboard from './keyboard';
 import Catchables from './catchables';
@@ -19,37 +17,33 @@ export default class Kit {
         this.catchables = new Catchables(this.store);
         this.keyboard = new Keyboard(this.toggleStartGame.bind(this));
         this.game = new Graveball(this.keyboard.keysPressed, this.endOfGame.bind(this),this.catchables);
-        this.engine = new Engine(this.game);
-
     }
 
     endOfGame(result) {
         result ? this.won() : this.lost();
     }
 
-    init(element){
-        this.engine.load(element);
-        this.game.load();
-        this.game.objects.forEach(element=>this.engine.scene.add(element));
+    load(element){
+        this.game.renderOn(element);
         this.start();
     }
 
     start() {
         this.store.dispatch(startGame());
-        this.engine.render();
+        this.game.render();
         this.countdown.setTime(300);
         this.countdown.start();
     }
 
     stop() {
         this.store.dispatch(stopGame());
-        this.engine.stopRender();
+        this.game.stopRender();
         this.countdown.stop();
     }
 
     continue() {
         this.store.dispatch(continueGame());
-        this.engine.render();
+        this.game.render();
         this.countdown.continue();
     }
 
@@ -65,12 +59,12 @@ export default class Kit {
 
     won() {
         this.store.dispatch(gameWon());
-        this.engine.stopRender();
+        this.game.stopRender();
     }
 
     lost() {
         this.store.dispatch(gameLost());
-        this.engine.stopRender();
+        this.game.stopRender();
     }
 
     reload() {
@@ -78,7 +72,7 @@ export default class Kit {
     }
 
     setGameContainerSize(width, height) {
-        this.engine.setSize(width, height);
+        this.game.setSize(width, height);
     }
 
 }

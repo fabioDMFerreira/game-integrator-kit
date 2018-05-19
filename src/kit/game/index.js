@@ -1,27 +1,22 @@
 export default class Game{
 
-    /**
-     * Add instance with methods to handle number of catchables on state
-     * @param {Object} catchables - instance of catchables
-     */
-    setCatchablesHandler(catchables){
-        this.catchables = catchables;
+    render(){
+        throw new Error('render should be implemented.');   
+    }
+
+    stopRender(){
+        throw new Error('stopRender should be implemented.');   
+    }
+    
+    setSize(){
+        throw new Error('setSize should be implemented.');           
     }
 
     /**
-     * Returns list of objects that should be render
-     * @param {Object} scene 
-     * @returns {Array.Object} listObjects
+     * Should set html element where game will be rendered
      */
-    getObjectsToRender(){
-        throw new Error('getWorldObjects should be implemented in game class');
-    }
-    
-    /**
-     * This method should be called in every render
-     */
-    onRender(){
-        throw new Error('onRender should be implemented in game class');
+    renderOn(){
+        throw new Error('renderOn should be implemented. This method should set html element where game will be rendered');
     }    
 
 };

@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import jQuery from 'jquery';
 
 var rays = {};
 
@@ -77,7 +76,7 @@ new THREE.Vector3(1, 0, -1),//esquerda tras
 ];
 
 
-export default function (obj, Radius, maxVel, rot,objMovable,platform,objCatchable,scene) {
+export default function (obj, Radius, maxVel, rot,objMovable,platform,objCatchable,scene,catchables) {
 	obj.Radius = Radius;
 	obj.translation = {};
 	obj.translation.z = new THREE.Vector3(0, 0, 1);
@@ -127,6 +126,15 @@ export default function (obj, Radius, maxVel, rot,objMovable,platform,objCatchab
 	obj.setVelocityY = function (value) {
 		obj.setVelocity("y", value);
 	};
+
+	obj.removeCatchable=function(object){
+		scene.remove(object);
+		objCatchable = objCatchable.filter(function (value) {
+			return value !== object;
+		});
+		catchables.decrease();
+	}
+
 	//detectar colisões
 	obj.detectCollisionUp = function () {
         if(!(objCatchable instanceof Array)){
@@ -137,10 +145,7 @@ export default function (obj, Radius, maxVel, rot,objMovable,platform,objCatchab
 			obj.caster.set(obj.position, rays["up"][id]);
 			var intersect = obj.caster.intersectObjects(objCatchable);
 			if (intersect.length > 0 && intersect[0].distance < obj.Radius + obj.Velocity["y"] + 15) {
-				scene.remove(intersect[0].object);
-				objCatchable = jQuery.grep(objCatchable, function (value) {
-					return value !== intersect[0].object;
-				});
+				obj.removeCatchable(intersect[0].object);
 			}
 		}
 
@@ -183,10 +188,7 @@ export default function (obj, Radius, maxVel, rot,objMovable,platform,objCatchab
 			obj.caster.set(obj.position, rays["down"][id]);
 			var intersect = obj.caster.intersectObjects(objCatchable);
 			if (intersect.length > 0 && intersect[0].distance < obj.Radius + obj.Velocity["y"] + 15) {
-				scene.remove(intersect[0].object);
-				objCatchable = jQuery.grep(objCatchable, function (value) {
-					return value !== intersect[0].object;
-				});
+				obj.removeCatchable(intersect[0].object);
 			}
 		}
 
@@ -238,11 +240,7 @@ export default function (obj, Radius, maxVel, rot,objMovable,platform,objCatchab
 			obj.caster.set(obj.position, rays[tecla][id]);
 			var intersect = obj.caster.intersectObjects(objCatchable);
 			if (intersect.length > 0 && intersect[0].distance < obj.Radius + obj.Velocity[eixo] + 15) {
-				scene.remove(intersect[0].object);
-				objCatchable = jQuery.grep(objCatchable, function (value) {
-					return value !== intersect[0].object;
-				});
-				jQuery(".pontuacao").html(objCatchable.length);
+				obj.removeCatchable(intersect[0].object);
 			}
 		}
 		//detectar objectos que se podem mover
