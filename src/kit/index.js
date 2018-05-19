@@ -1,4 +1,4 @@
-import state from './state';
+import reducer from './reducer';
 import { createStore } from 'redux';
 import { devToolsEnhancer } from 'redux-devtools-extension';
 
@@ -8,22 +8,27 @@ import Catchables from './catchables';
 
 import Graveball from './game/graveball';
 
-import { startGame, stopGame, continueGame, gameWon, gameLost } from './state/gameStatus';
+import { startGame, stopGame, continueGame, gameWon, gameLost } from './reducer/gameStatus';
 
 export default class Kit {
     constructor() {
-        this.store = createStore(state, devToolsEnhancer());
+        if(process.env.NODE_ENV ==='development'){
+            this.store = createStore(reducer, devToolsEnhancer());
+        }
+        else{
+            this.store = createStore(reducer);            
+        }
         this.countdown = new Countdown(this.store, this.endOfGame.bind(this));
         this.catchables = new Catchables(this.store);
         this.keyboard = new Keyboard(this.toggleStartGame.bind(this));
-        this.game = new Graveball(this.keyboard.keysPressed, this.endOfGame.bind(this),this.catchables);
+        this.game = new Graveball(this.keyboard.keysPressed, this.endOfGame.bind(this), this.catchables);
     }
 
     endOfGame(result) {
         result ? this.won() : this.lost();
     }
 
-    load(element){
+    load(element) {
         this.game.renderOn(element);
         this.start();
     }

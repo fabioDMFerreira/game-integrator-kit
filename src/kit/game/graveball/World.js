@@ -56,8 +56,8 @@ export default class World {
     cleanKeyboardKey(id) {
         var idSpl = id.split("");
         for (var x in idSpl) {
-            if (this.keyboard[parseInt(idSpl[x].charCodeAt(0))]) {
-                this.keyboard[parseInt(idSpl[x].charCodeAt(0))] = "";
+            if (this.keyboard[parseInt(idSpl[x].charCodeAt(0),10)]) {
+                this.keyboard[parseInt(idSpl[x].charCodeAt(0),10)] = "";
             }
         }
     }

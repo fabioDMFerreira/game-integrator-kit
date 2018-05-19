@@ -3,7 +3,10 @@ import * as THREE from 'three';
 import Engine from '../engines/three';
 import buildWorldObjects from './buildWorldObjects';
 
-import { CubeObj, BallObj } from './factory';
+import {
+    //  CubeObj, 
+     BallObj 
+    } from './factory';
 import ballTexture from './images/ball.jpg';
 import World from './World';
 
