@@ -12,11 +12,11 @@ import { startGame, stopGame, continueGame, gameWon, gameLost } from './reducer/
 
 export default class Kit {
     constructor() {
-        if(process.env.NODE_ENV ==='development'){
+        if (process.env.NODE_ENV === 'development') {
             this.store = createStore(reducer, devToolsEnhancer());
         }
-        else{
-            this.store = createStore(reducer);            
+        else {
+            this.store = createStore(reducer);
         }
         this.countdown = new Countdown(this.store, this.endOfGame.bind(this));
         this.catchables = new Catchables(this.store);
