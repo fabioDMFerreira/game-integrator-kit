@@ -1,10 +1,6 @@
 body {
-    margin: 0;
-}
+  margin: 0; }
 
-body,
-#root,
-.App {
-    margin: 0;
-    overflow: hidden;
-}
+body, #root, .App {
+  margin: 0;
+  overflow: hidden; }

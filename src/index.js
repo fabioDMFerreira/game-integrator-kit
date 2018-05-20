@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import './index.css';
-import HOApp from './HOApp';
+import HOApp from './App';
 import registerServiceWorker from './registerServiceWorker';
 import Kit from './kit';
 

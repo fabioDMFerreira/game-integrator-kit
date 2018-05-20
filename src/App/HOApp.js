@@ -31,7 +31,7 @@ const HOApp = (kit) => {
 			this.loadGame = kit.load.bind(kit);
 			this.setGameSize = kit.setGameContainerSize.bind(kit);
 
-			this.continueGame = this.kit.continue.bind(kit);
+			this.continueGame = kit.continue.bind(kit);
 			this.reload = kit.reload; // method that doesn't need context
 		}
 

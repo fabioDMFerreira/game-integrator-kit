@@ -1,2 +1,1 @@
-export { kit } from '../index';
-export { default } from './App';
+export { default } from './HOApp';
