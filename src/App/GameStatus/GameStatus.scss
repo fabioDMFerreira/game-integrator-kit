@@ -1,15 +1,20 @@
 @import 'sass/shared.scss';
 .game-status-container {
-    background-color: rgba(0,0,0,0.7);
-    color: white;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
     position: absolute;
     top: 0;
-    padding: 10px;
     font-weight: bold;
     font-size: 1rem;
     width: 100%;
     &>div {
         float: left;
-        margin: 0px 20px;
+        padding: 10px;
+    }
+    & button {
+        height: 1rem;
+    }
+    & svg {
+        fill: #fff;
     }
 }

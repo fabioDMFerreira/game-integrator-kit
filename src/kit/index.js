@@ -7,6 +7,7 @@ import Countdown from './countdown';
 import Keyboard from './keyboard';
 import Catchables from './catchables';
 import Graveball from './game/graveball';
+import { showMenu, hideMenu, showControls, hideControls } from './ui/state';
 
 export default class Kit {
 	constructor() {
@@ -40,6 +41,7 @@ export default class Kit {
 	}
 
 	start() {
+		this.store.dispatch(hideMenu());
 		this.store.dispatch(startGame());
 		this.game.render();
 		this.countdown.setTime(300);
@@ -53,6 +55,8 @@ export default class Kit {
 	}
 
 	continue() {
+		this.store.dispatch(hideMenu());
+		this.store.dispatch(hideControls());
 		this.store.dispatch(continueGame());
 		this.game.render();
 		this.countdown.continue();
@@ -65,6 +69,16 @@ export default class Kit {
 		} else {
 			this.stop();
 		}
+	}
+
+	showMenu() {
+		this.stop();
+		this.store.dispatch(showMenu());
+	}
+
+	showControls() {
+		this.stop();
+		this.store.dispatch(showControls());
 	}
 
 	won() {

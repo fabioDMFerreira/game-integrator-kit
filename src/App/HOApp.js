@@ -20,6 +20,9 @@ const HOApp = (kit) => {
 			this.loadGame = kit.load.bind(kit);
 			this.setGameSize = kit.setGameContainerSize.bind(kit);
 
+			this.openMenu = kit.showMenu.bind(kit);
+			this.openControls = kit.showControls.bind(kit);
+
 			this.continueGame = kit.continue.bind(kit);
 			this.reload = kit.reload; // method that doesn't need context
 		}
@@ -27,9 +30,20 @@ const HOApp = (kit) => {
 		render() {
 			return (
 				<div className="App">
-					<Game load={this.loadGame} setSize={this.setGameSize} />
-					<GameStatus />
-					{this.props.showMenu && <Menu continue={this.continueGame} reload={this.reload} />}
+					<Game
+						load={this.loadGame}
+						setSize={this.setGameSize}
+					/>
+					<GameStatus
+						openMenu={this.openMenu}
+						openControls={this.openControls}
+					/>
+					{
+						this.props.showMenu &&
+						<Menu
+							continue={this.continueGame}
+							reload={this.reload}
+						/>}
 					{
 						this.props.showControls &&
 						<Controls>

@@ -59,22 +59,18 @@ export default (state = new Map(), action) => {
 	case STOP_GAME:
 		return state.merge({
 			gameStopped: true,
-			showMenu: true,
 		});
 	case CONTINUE_GAME:
 		return state.merge({
 			gameStopped: false,
-			showMenu: false,
 		});
 	case GAME_LOST:
 		return state.merge({
 			gameLost: true,
-			showMenu: true,
 		});
 	case GAME_WON:
 		return state.merge({
 			gameWon: true,
-			showMenu: true,
 		});
 	case SET_CONTROLS_DESCRIPTION:
 		if (action.description) {
