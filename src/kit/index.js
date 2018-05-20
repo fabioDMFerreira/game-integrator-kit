@@ -2,7 +2,7 @@ import { createStore } from 'redux';
 import { devToolsEnhancer } from 'redux-devtools-extension';
 
 import reducer from './reducer';
-import { startGame, stopGame, continueGame, gameWon, gameLost } from './reducer/gameStatus';
+import { startGame, stopGame, continueGame, gameWon, gameLost, setControlsDescription } from './reducer/gameStatus';
 import Countdown from './countdown';
 import Keyboard from './keyboard';
 import Catchables from './catchables';
@@ -22,7 +22,12 @@ export default class Kit {
 			this.keyboard.keysPressed,
 			this.endOfGame.bind(this),
 			this.catchables,
+			this.setControlsDescription.bind(this),
 		);
+	}
+
+	setControlsDescription(description) {
+		this.store.dispatch(setControlsDescription(description));
 	}
 
 	endOfGame(result) {

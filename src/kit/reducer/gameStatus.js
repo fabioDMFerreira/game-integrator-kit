@@ -4,7 +4,8 @@ const START_GAME = 'START_GAME',
 	STOP_GAME = 'STOP_GAME',
 	CONTINUE_GAME = 'CONTINUE_GAME',
 	GAME_WON = 'GAME_WON',
-	GAME_LOST = 'GAME_LOST';
+	GAME_LOST = 'GAME_LOST',
+	SET_CONTROLS_DESCRIPTION = 'SET_CONTROLS_DESCRIPTION';
 
 export function startGame() {
 	return {
@@ -36,6 +37,17 @@ export function gameLost() {
 	};
 }
 
+/**
+ * Set description of controls that must be used in game.
+ * @param {class} description - must be a react component or a function
+ */
+export function setControlsDescription(description) {
+	return {
+		type: SET_CONTROLS_DESCRIPTION,
+		description,
+	};
+}
+
 export default (state = new Map(), action) => {
 	switch (action.type) {
 	case START_GAME:
@@ -64,6 +76,12 @@ export default (state = new Map(), action) => {
 			gameWon: true,
 			showMenu: true,
 		});
+	case SET_CONTROLS_DESCRIPTION:
+		if (action.description) {
+			return state.set('controlsDescription', action.description);
+		}
+		console.warn('description is undefined');
+		return state;
 	default:
 		return state;
 	}

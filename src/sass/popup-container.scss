@@ -1,0 +1,10 @@
+@mixin popup-container{
+    background-color: rgba(0, 0, 0, 0.7);
+    @include flexbox();
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    @include align-items(center);
+    @include justify-content(center);
+}

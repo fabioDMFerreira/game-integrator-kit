@@ -1,3 +1,9 @@
+@import 'sass/shared.scss';
+
+.menu-container{
+	@include popup-container();
+}
+
 .info{
     margin:auto;
     background-color: white;

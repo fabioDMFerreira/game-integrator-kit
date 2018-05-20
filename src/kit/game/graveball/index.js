@@ -2,6 +2,7 @@ import * as THREE from 'three';
 
 import Engine from '../engines/three';
 import buildWorldObjects from './buildWorldObjects';
+import ControlsDescription from './ControlsDescription';
 
 import {
 	//  CubeObj,
@@ -15,7 +16,7 @@ let anguloCamera = 3 / 2 * Math.PI,
 	keyboardStatus = true;
 
 export default class Graveball extends Engine {
-	constructor(keyboard, finishGame, catchables) {
+	constructor(keyboard, finishGame, catchables, setControlsDescription) {
 		super();
 		this.platform = [];
 		this.objMovable = [];
@@ -23,6 +24,7 @@ export default class Graveball extends Engine {
 		this.keyboard = keyboard;
 		this.finishGame = finishGame;
 		this.catchables = catchables;
+		this.setControlsDescription = setControlsDescription;
 
 		this.load();
 		this.subscribeRender(this.applyControls.bind(this));
@@ -90,6 +92,8 @@ export default class Graveball extends Engine {
 		this.world.setObject(ball);
 
 		this.objects.forEach(element => this.scene.add(element));
+
+		this.setControlsDescription(ControlsDescription);
 	}
 
 	applyControls() {

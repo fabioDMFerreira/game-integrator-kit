@@ -7,19 +7,9 @@ import Countdown from './Countdown';
 import './GameStatus.css';
 
 export const GameStatus = props => (
-	<div className="infoGame">
+	<div className="game-status-container">
 		<Countdown />
-		<div className="controls">
-			<ul>
-				<li>W-frente |</li>
-				<li>S-atr&aacute;s |</li>
-				<li>A-esquerda |</li>
-				<li>D-direita |</li>
-				<li>Espa&ccedil;o-saltar |</li>
-				<li>Setas direita esquerda - rodar |</li>
-				<li>Setas frente atr&aacute;s - aproximar/afastar</li>
-			</ul>
-		</div>
+		<div className="controls" />
 		<div>
 				Items to catch: {props.numberOfCatchables}
 		</div>
