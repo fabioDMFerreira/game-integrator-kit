@@ -10,16 +10,17 @@ export default class Keyboard {
 	//     68: "d"
 	// };
 
-	constructor(toggleContinueStopGame) {
+	constructor(toggleContinueStopGame, showMenu) {
 		document.addEventListener('keydown', this.onKeyDown.bind(this), false);
 		document.addEventListener('keyup', this.onKeyUp.bind(this), false);
 		this.keysPressed = [];
 		this.toggleContinueStopGame = toggleContinueStopGame;
+		this.showMenu = showMenu;
 	}
 
 	onKeyDown(event) {
 		if (event.keyCode === 27) {
-			this.toggleContinueStopGame();
+			this.toggleContinueStopGame([this.showMenu]);
 		} else {
 			this.keysPressed[event.keyCode] = 'pressed';
 		}

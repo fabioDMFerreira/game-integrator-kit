@@ -9,6 +9,8 @@ import Catchables from './catchables';
 import Graveball from './game/graveball';
 import { showMenu, hideMenu, showControls, hideControls } from './ui/state';
 
+import { executeFunction, parseArray } from './utils';
+
 export default class Kit {
 	constructor() {
 		if (process.env.NODE_ENV === 'development') {
@@ -18,7 +20,7 @@ export default class Kit {
 		}
 		this.countdown = new Countdown(this.store, this.endOfGame.bind(this));
 		this.catchables = new Catchables(this.store);
-		this.keyboard = new Keyboard(this.toggleStartGame.bind(this));
+		this.keyboard = new Keyboard(this.toggleStartGame.bind(this), this.showMenu.bind(this));
 		this.game = new Graveball(
 			this.keyboard.keysPressed,
 			this.endOfGame.bind(this),
@@ -62,12 +64,20 @@ export default class Kit {
 		this.countdown.continue();
 	}
 
-	toggleStartGame() {
+	/**
+	 * Start and stop game.
+	 * @param {Array.Function} cbContinue - functions to be called if game was continued
+	 * @param {Array.Function} cbStop - functions to be called if game was stopped
+	 */
+	toggleStartGame(cbContinue = [], cbStop = []) {
 		const gameStopped = this.store.getState().get('gameStopped');
 		if (gameStopped) {
 			this.continue();
+			parseArray(cbContinue).forEach(executeFunction);
 		} else {
 			this.stop();
+			cbContinue.forEach(executeFunction);
+			parseArray(cbStop).forEach(executeFunction);
 		}
 	}
 
