@@ -11,10 +11,8 @@ export function parseArray(someObject) {
 }
 
 export function executeFunction(fn) {
-	if (fn instanceof Function) {
-		fn();
-		return 1;
+	if (typeof (fn) === 'function') {
+		return fn();
 	}
-	console.warn('fn is not a function');
-	return 0;
+	throw new Error('fn is not a function');
 }

@@ -30,6 +30,10 @@ export function hideControls() {
 }
 
 export default function (state = new Map(), action = {}) {
+	if (state === null) {
+		throw new Error('state should not be null');
+	}
+
 	switch (action.type) {
 	case SHOW_MENU:
 		return state.set('showMenu', true);
