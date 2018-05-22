@@ -76,7 +76,7 @@ rays.s = [new THREE.Vector3(0, 1, 0),
 ];
 
 
-export default function (obj, Radius, maxVel, rot, objMovable, platform, objCatchable, scene, catchables) {
+export default function (obj, Radius, maxVel, rot, objMovable, platform, objCatchable, scene, catchablesInterface) {
 	obj.Radius = Radius;
 	obj.translation = {};
 	obj.translation.z = new THREE.Vector3(0, 0, 1);
@@ -128,9 +128,10 @@ export default function (obj, Radius, maxVel, rot, objMovable, platform, objCatc
 	};
 
 	obj.removeCatchable = function (object) {
+		const index = objCatchable.findIndex(value => value === object);
 		scene.remove(object);
-		objCatchable = objCatchable.filter(value => value !== object);
-		catchables.decrease();
+		objCatchable.splice(index, 1);
+		catchablesInterface.decrease();
 	};
 
 	// detectar colisões

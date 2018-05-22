@@ -16,14 +16,14 @@ let anguloCamera = 3 / 2 * Math.PI,
 	keyboardStatus = true;
 
 export default class Graveball extends Engine {
-	constructor(keyboard, finishGame, catchables, setControlsDescription) {
+	constructor(keyboard, finishGame, catchablesInterface, setControlsDescription) {
 		super();
 		this.platform = [];
 		this.objMovable = [];
 		this.gifts = [];
 		this.keyboard = keyboard;
 		this.finishGame = finishGame;
-		this.catchables = catchables;
+		this.catchablesInterface = catchablesInterface;
 		this.setControlsDescription = setControlsDescription;
 
 		this.load();
@@ -33,7 +33,7 @@ export default class Graveball extends Engine {
 	generateGifts() {
 		const ray = new THREE.Raycaster();
 
-		for (let i = 0; i < 10; i++) {
+		for (let i = 0; i < 1; i++) {
 			const material = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load(ballTexture) });
 			const gift = new THREE.Mesh(new THREE.SphereGeometry(50, 50, 50), material);
 			gift.position.z = Math.floor((10000 * Math.random()) - 5000);
@@ -56,12 +56,12 @@ export default class Graveball extends Engine {
 			this.gifts.push(gift);
 		}
 
-		this.catchables.set(this.gifts.length);
+		this.catchablesInterface.set(this.gifts.length);
 	}
 
 	load() {
 		this.objects = buildWorldObjects(this.platform);
-		const ball = new BallObj(50, this.objMovable, this.platform, this.gifts, this.scene, this.catchables);
+		const ball = new BallObj(50, this.objMovable, this.platform, this.gifts, this.scene, this.catchablesInterface);
 		ball.position.set(0, 500, 0);
 
 		this.objects.push(ball);
@@ -101,6 +101,12 @@ export default class Graveball extends Engine {
 			return;
 		}
 		this.world.moves(this.keyboard);
+
+		if (this.gifts.length === 0) {
+			this.finishGame(1);
+			this.stopRender();
+		}
+
 		if (this.camera) {
 			if (this.keyboard[39]) {
 				anguloCamera -= 1 / 100 * Math.PI;

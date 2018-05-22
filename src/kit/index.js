@@ -93,12 +93,12 @@ export default class Kit {
 
 	won() {
 		this.store.dispatch(gameWon());
-		this.stop();
+		this.showMenu();
 	}
 
 	lost() {
 		this.store.dispatch(gameLost());
-		this.stop();
+		this.showMenu();
 	}
 
 	setGameContainerSize(width, height) {

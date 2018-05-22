@@ -24,10 +24,10 @@ export class Menu extends Component {
 		return (
 			<div className="menu-container">
 				<div className="info">
-					{this.props.gameLost && <h1 id="perdeste">Won!!!</h1>}
-					{this.props.gameWon && <h1 id="ganhaste">Lost!!!</h1>}
+					{this.props.gameWon && <h1 id="perdeste">Won!!!</h1>}
+					{this.props.gameLost && <h1 id="ganhaste">Lost!!!</h1>}
 					<ul>
-						{this.props.gameStopped && <li id="continuar"><Button onClick={this.continueGame}>Continue</Button></li>}
+						{this.props.gameStopped && !this.props.gameWon && !this.props.gameLost && <li id="continuar"><Button onClick={this.continueGame}>Continue</Button></li>}
 						<li id="novo_jogo" ><Button onClick={this.newGame}>New Game</Button></li>
 					</ul>
 				</div>

@@ -9,6 +9,8 @@ import Kit from './kit';
 const kit = new Kit(),
 	App = HOApp(kit);
 
+global.Kit = kit;
+
 ReactDOM.render(
 	<Provider
 		store={kit.store}

@@ -1,10 +1,21 @@
 import * as THREE from 'three';
 import Game from '../index';
 
+function buildRender() {
+	const renderer = new THREE.WebGLRenderer({ antialias: true });
+	renderer.setClearColor(0xEEEEEE, 1.0);
+	renderer.clear();
+	renderer.shadowMap.enabled = true;
+	renderer.shadowMapSoft = true;
+	renderer.antialias = true;
+	renderer.shadowMapAutoUpdate = true;
+	return renderer;
+}
+
 export default class ThreeEngine extends Game {
 	constructor() {
 		super();
-		this.renderer = this.buildRender();
+		this.renderer = buildRender();
 		this.scene = new THREE.Scene();
 		this.camera = null;
 		this.requestAnimationId = null;
@@ -14,7 +25,8 @@ export default class ThreeEngine extends Game {
 	}
 
 	/**
-	 * Add result of rendering to a html element. The game will be renderer in gameContainer html element.
+	 * Add result of rendering to a html element.
+	 * The game will be renderer in gameContainer html element.
 	 * @param {Object} gameContainer - a html element where game will be rendered
 	 */
 	renderOn(gameContainer) {
@@ -56,16 +68,5 @@ export default class ThreeEngine extends Game {
 		this.camera.aspect = window.innerWidth / window.innerHeight;
 		this.camera.updateProjectionMatrix();
 		this.renderer.setSize(width, height);
-	}
-
-	buildRender() {
-		const renderer = new THREE.WebGLRenderer({ antialias: true });
-		renderer.setClearColor(0xEEEEEE, 1.0);
-		renderer.clear();
-		renderer.shadowMap.enabled = true;
-		renderer.shadowMapSoft = true;
-		renderer.antialias = true;
-		renderer.shadowMapAutoUpdate = true;
-		return renderer;
 	}
 }

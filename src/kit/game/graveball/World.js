@@ -63,9 +63,6 @@ export default class World {
 		if (this.Obj.position.y < -100) {
 			this.endOfGame();
 		}
-		if (this.objCatchable.length === 0) {
-			this.endOfGame(1);
-		}
 	}
 
 	moves(keyboard) {

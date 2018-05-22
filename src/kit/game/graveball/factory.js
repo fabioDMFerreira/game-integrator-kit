@@ -19,12 +19,12 @@ export class Plate {
 }
 
 export class BallObj {
-	constructor(radius, objMovable, platform, objCatchable, scene, catchables) {
+	constructor(radius, objMovable, platform, objCatchable, scene, catchablesInterface) {
 		const material = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load(ballTexture) });
 		const obj = new THREE.Mesh(new THREE.SphereGeometry(radius, 50, 50), material);
 		obj.castShadow = true;
 		obj.structure = 'ball';
-		applyPhysicsRules(obj, radius, 1000, true, objMovable, platform, objCatchable, scene, catchables);// obj, distancia dos Radiuss de colisao, velocidade maxima, se roda ao mover-se
+		applyPhysicsRules(obj, radius, 1000, true, objMovable, platform, objCatchable, scene, catchablesInterface);// obj, distancia dos Radiuss de colisao, velocidade maxima, se roda ao mover-se
 
 		return obj;
 	}
