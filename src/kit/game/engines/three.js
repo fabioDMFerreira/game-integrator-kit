@@ -44,11 +44,11 @@ export default class ThreeEngine extends Game {
 		if (this.camera) {
 			this.renderer.render(this.scene, this.camera);
 		}
-		this.requestAnimationId = requestAnimationFrame(this.render.bind(this));
+		this.requestAnimationId = window.requestAnimationFrame(this.render.bind(this));
 	}
 
 	stopRender() {
-		cancelAnimationFrame(this.requestAnimationId);
+		window.cancelAnimationFrame(this.requestAnimationId);
 	}
 
 	setSize(width, height) {
