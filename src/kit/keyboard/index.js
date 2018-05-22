@@ -20,7 +20,7 @@ export default class Keyboard {
 
 	onKeyDown(event) {
 		if (event.keyCode === 27) {
-			this.toggleContinueStopGame([this.showMenu]);
+			this.toggleContinueStopGame([], [this.showMenu]);
 		} else {
 			this.keysPressed[event.keyCode] = 'pressed';
 		}

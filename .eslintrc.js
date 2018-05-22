@@ -4,7 +4,8 @@ module.exports = {
         "react",
         "jsx-a11y",
         "import",
-        "css-modules"
+        "css-modules",
+        "jest"
     ],
     "rules": {
         "indent": [1, "tab"],
@@ -21,8 +22,10 @@ module.exports = {
     "globals": {
         "document": true,
         "window": true,
-        "it": true,
         "navigator": true,
         "fetch": true
+    },
+    "env": {
+        "jest/globals": true
     }
 };

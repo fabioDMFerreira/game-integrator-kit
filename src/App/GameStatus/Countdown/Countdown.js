@@ -3,11 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-export const Countdown = props => (
-	<div className="cronometro">
-		{props.countdownTime}
-	</div>
-);
+export const Countdown = props => <span>{props.countdownTime}</span>;
 
 
 Countdown.propTypes = {

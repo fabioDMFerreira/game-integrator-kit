@@ -9,7 +9,7 @@
     width: 100%;
     &>div {
         float: left;
-        padding: 10px;
+        padding:0px 5px 0px 0px;
     }
     & button {
         height: 1rem;
@@ -17,4 +17,16 @@
     & svg {
         fill: #fff;
     }
+    .countdown,
+    .catchables {
+        min-width: 88px;
+        font-size: 1.1rem;
+        padding: 8px 16px;
+        text-align: center;
+        svg{
+            vertical-align: middle;
+            height:1.1rem;
+        }
+    }
+
 }

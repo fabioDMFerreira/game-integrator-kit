@@ -2,7 +2,7 @@ import { Map } from 'immutable';
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Menu, Help } from '@material-ui/icons';
+import { Menu, Help, BlurCircular, Timer } from '@material-ui/icons';
 import Button from '@material-ui/core/Button';
 
 import Countdown from './Countdown';
@@ -11,19 +11,20 @@ import './GameStatus.css';
 export const GameStatus = props => (
 	<div className="game-status-container">
 		<div>
-			<Button onClick={props.openMenu}>
+			<Button variant="raised" color="primary" onClick={props.openMenu}>
 				<Menu />
 			</Button>
 		</div>
 		<div>
-			<Button onClick={props.openControls}>
+			<Button variant="raised" color="primary" onClick={props.openControls}>
 				<Help />
 			</Button>
 		</div>
-		<Countdown />
-		<div className="controls" />
-		<div>
-			Items to catch: {props.numberOfCatchables}
+		<div className="countdown">
+			<Timer /> <Countdown />
+		</div>
+		<div className="catchables" title="Objects to catch">
+			<BlurCircular /> {props.numberOfCatchables}
 		</div>
 	</div>
 );

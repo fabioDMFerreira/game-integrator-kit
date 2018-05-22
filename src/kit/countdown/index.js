@@ -4,6 +4,7 @@ export default class Coundown {
 	constructor(store, endOfGame) {
 		this.store = store;
 		this.endOfGame = endOfGame;
+		this.timer = null;
 	}
 
 	setTime(time) {
@@ -25,9 +26,13 @@ export default class Coundown {
 			this.endOfGame();
 		}
 
-		setTimeout(() => {
-			this.decrement();
-		}, 1000);
+		// set a timeout to decrement counter only if there isn't already a timeout defined
+		if (!this.timer) {
+			this.timer = setTimeout(() => {
+				this.timer = null;
+				this.decrement();
+			}, 1000);
+		}
 	}
 
 	start() {

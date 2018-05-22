@@ -15,6 +15,6 @@ export function executeFunction(fn) {
 		fn();
 		return 1;
 	}
-	console.warn('fn is not a funtion');
+	console.warn('fn is not a function');
 	return 0;
 }
