@@ -1,23 +1,10 @@
-export const SET_NUMBER_CATCHABLES = 'SET_NUMBER_CATCHABLES',
-	DECREMENT_NUMBER_CATCHABLES = 'DECREMENT_NUMBER_CATCHABLES';
+import { Map } from 'immutable';
+import { SET_NUMBER_CATCHABLES, DECREMENT_NUMBER_CATCHABLES } from './actions';
 
-export function setNumberCatchables(number) {
-	return {
-		type: SET_NUMBER_CATCHABLES,
-		number,
-	};
-}
-
-export function decrementNumberCatchables() {
-	return {
-		type: DECREMENT_NUMBER_CATCHABLES,
-	};
-}
-
-export default function (state = new Map(), action) {
+export default function (state = new Map(), action = {}) {
 	switch (action.type) {
 	case SET_NUMBER_CATCHABLES: {
-		if (action.number && !Number.isNaN(action.number)) {
+		if (action.number && typeof action.number === 'number') {
 			return state.set('numberOfCatchables', action.number);
 		}
 		console.warn('setNumberCatchables first parameter should be a number');
