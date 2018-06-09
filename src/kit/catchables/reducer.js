@@ -1,5 +1,5 @@
 import { Map } from 'immutable';
-import { SET_NUMBER_CATCHABLES, DECREMENT_NUMBER_CATCHABLES } from './actions';
+import { SET_NUMBER_CATCHABLES, DECREMENT_NUMBER_CATCHABLES } from './constants';
 
 export default function (state = new Map(), action = {}) {
 	switch (action.type) {

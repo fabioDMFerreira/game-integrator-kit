@@ -1,6 +1,6 @@
 import { Map } from 'immutable';
 
-import { START_COUNTDOWN, STOP_COUNTDOWN, SET_COUNTDOWN_TIME, CONTINUE_COUNTDOWN, DECREMENT_COUNTDOWN_TIME } from './actions';
+import { START_COUNTDOWN, STOP_COUNTDOWN, SET_COUNTDOWN_TIME, CONTINUE_COUNTDOWN, DECREMENT_COUNTDOWN_TIME } from './constants';
 
 export default function (state = new Map(), action) {
 	if (!action || !action.type) {

@@ -1,47 +1,49 @@
 import { Map } from 'immutable';
 
-import state, { showMenu, showControls, hideMenu, hideControls } from './state';
+import { showMenu, showControls, hideMenu, hideControls } from '../actions';
+import reducer from '../reducer';
 
 describe('ui.state', () => {
 	it('should return a empty Map if no parameter is passed', () => {
-		expect(state()).toBe(new Map());
+		expect(reducer()).toBe(new Map());
+		expect(reducer(undefined, { type: 'DOES_NOT_EXIST' })).toBe(new Map());
 	});
 
 	it('should return state as it is passed by parameter if no action is passed', () => {
 		let expected = new Map({ a: 1 }),
-			actual = state(expected);
+			actual = reducer(expected);
 		expect(actual).toBe(expected);
 
 		expected = { a: 1 };
-		actual = state(expected);
+		actual = reducer(expected);
 		expect(actual).toBe(expected);
 	});
 
 	it('should add showMenu value true to state', () => {
 		const expected = new Map({ showMenu: true }),
-			actual = state(undefined, showMenu());
+			actual = reducer(undefined, showMenu());
 		expect(actual).toEqual(expected);
 	});
 
 	it('should add showControls value true to state', () => {
 		const expected = new Map({ showControls: true }),
-			actual = state(undefined, showControls());
+			actual = reducer(undefined, showControls());
 		expect(actual).toEqual(expected);
 	});
 
 	it('should add showMenu value false to state', () => {
 		const expected = new Map({ showMenu: false }),
-			actual = state(undefined, hideMenu());
+			actual = reducer(undefined, hideMenu());
 		expect(actual).toEqual(expected);
 	});
 
 	it('should add showControls value false to state', () => {
 		const expected = new Map({ showControls: false }),
-			actual = state(undefined, hideControls());
+			actual = reducer(undefined, hideControls());
 		expect(actual).toEqual(expected);
 	});
 
 	it('should throw an error if state is null', () => {
-		expect(() => state(null, showMenu())).toThrow();
+		expect(() => reducer(null, showMenu())).toThrow();
 	});
 });

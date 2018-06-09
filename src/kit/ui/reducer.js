@@ -1,37 +1,12 @@
 import { Map } from 'immutable';
 
-const SHOW_MENU = 'SHOW_MENU',
-	SHOW_CONTROLS = 'SHOW_CONTROLS',
-	HIDE_MENU = 'HIDE_MENU',
-	HIDE_CONTROLS = 'HIDE_CONTROLS';
-
-export function showMenu() {
-	return {
-		type: SHOW_MENU,
-	};
-}
-
-export function showControls() {
-	return {
-		type: SHOW_CONTROLS,
-	};
-}
-
-export function hideMenu() {
-	return {
-		type: HIDE_MENU,
-	};
-}
-
-export function hideControls() {
-	return {
-		type: HIDE_CONTROLS,
-	};
-}
+import { SHOW_MENU, SHOW_CONTROLS, HIDE_MENU, HIDE_CONTROLS } from './constants';
 
 export default function (state = new Map(), action = {}) {
 	if (state === null) {
 		throw new Error('state should not be null');
+	} else if (!action.type) {
+		return state;
 	}
 
 	switch (action.type) {

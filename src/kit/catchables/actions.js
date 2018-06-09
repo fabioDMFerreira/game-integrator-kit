@@ -1,5 +1,4 @@
-export const SET_NUMBER_CATCHABLES = 'SET_NUMBER_CATCHABLES',
-	DECREMENT_NUMBER_CATCHABLES = 'DECREMENT_NUMBER_CATCHABLES';
+import { SET_NUMBER_CATCHABLES, DECREMENT_NUMBER_CATCHABLES } from './constants';
 
 export function setNumberCatchables(number) {
 	return {
