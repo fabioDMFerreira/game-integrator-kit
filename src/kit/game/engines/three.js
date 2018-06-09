@@ -49,7 +49,15 @@ export default class ThreeEngine extends Game {
 		return false;
 	}
 
+	startRender() {
+		this.rendering = true;
+		this.render();
+	}
+
 	render() {
+		if (!this.rendering) {
+			return;
+		}
 		// execute all functions that were subscribed on render
 		this.onRender.forEach(callback => callback());
 
@@ -60,6 +68,7 @@ export default class ThreeEngine extends Game {
 	}
 
 	stopRender() {
+		this.rendering = false;
 		window.cancelAnimationFrame(this.requestAnimationId);
 	}
 

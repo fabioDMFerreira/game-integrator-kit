@@ -52,7 +52,7 @@ export default class Kit {
 	start() {
 		this.ui.hideMenu();
 		this.gameStatus.startGame();
-		this.game.render();
+		this.game.startRender();
 		this.countdown.setTime(300);
 		this.countdown.start();
 	}
@@ -67,7 +67,7 @@ export default class Kit {
 		this.ui.hideMenu();
 		this.ui.hideControls();
 		this.gameStatus.continueGame();
-		this.game.render();
+		this.game.startRender();
 		this.countdown.continue();
 	}
 
