@@ -3,6 +3,10 @@ import { Map } from 'immutable';
 import { START_COUNTDOWN, STOP_COUNTDOWN, SET_COUNTDOWN_TIME, CONTINUE_COUNTDOWN, DECREMENT_COUNTDOWN_TIME } from './actions';
 
 export default function (state = new Map(), action) {
+	if (!action || !action.type) {
+		return state;
+	}
+
 	switch (action.type) {
 	case START_COUNTDOWN:
 		return state.merge({
@@ -14,7 +18,7 @@ export default function (state = new Map(), action) {
 	case CONTINUE_COUNTDOWN:
 		return state.set('countdownStopped', false);
 	case SET_COUNTDOWN_TIME:
-		if (action.time && !Number.isNaN(action.time)) {
+		if (action.time && !Number.isNaN(Number(action.time))) {
 			return state.set('countdownTime', Number(action.time));
 		}
 		console.warn('Countdown time should be a number');

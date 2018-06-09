@@ -11,28 +11,54 @@ export default class Countdown {
 		this.store.dispatch(setCountdownTime(time));
 	}
 
-	decrement() {
+	checkCountdownEnd() {
 		const state = this.store.getState(),
-			countdownTime = state.get('countdownTime'),
+			countdownTime = state.get('countdownTime');
+
+		return !countdownTime;
+	}
+
+	checkCountdownIsStopped() {
+		const state = this.store.getState(),
 			countdownStopped = state.get('countdownStopped');
 
-		if (countdownStopped) {
-			return;
+		return !!countdownStopped;
+	}
+
+	clearTimerOfTimeDecrementation() {
+		if (this.timer) {
+			clearTimeout(this.timer);
+			this.timer = null;
+		}
+	}
+
+	/**
+	 * Returns true if time was decremented
+	 */
+	decrementTime() {
+		if (this.checkCountdownEnd()) {
+			this.endOfGame();
+			return false;
+		} else if (this.checkCountdownIsStopped()) {
+			return false;
 		}
 
 		this.store.dispatch(decrementCountdownTime());
+		return true;
+	}
 
-		if (!countdownTime) {
-			this.endOfGame();
+	clearTimerAndDecrementTime() {
+		this.clearTimerOfTimeDecrementation();
+		if (this.decrementTime()) {
+			this.waitOneSecondAndDecrementTime();
 		}
+	}
 
-		// set a timeout to decrement counter only if there isn't already a timeout defined
-		if (!this.timer) {
-			this.timer = setTimeout(() => {
-				this.timer = null;
-				this.decrement();
-			}, 1000);
+	waitOneSecondAndDecrementTime() {
+		if (this.timer) {
+			return;
 		}
+		this.timer = setTimeout(this.clearTimerAndDecrementTime.bind(this), 1000);
 	}
 
 	start() {
@@ -41,12 +67,12 @@ export default class Countdown {
 			return;
 		}
 		this.store.dispatch(startCountdown());
-		this.decrement();
+		this.waitOneSecondAndDecrementTime();
 	}
 
 	continue() {
 		this.store.dispatch(continueCountdown());
-		this.decrement();
+		this.waitOneSecondAndDecrementTime();
 	}
 
 	stop() {

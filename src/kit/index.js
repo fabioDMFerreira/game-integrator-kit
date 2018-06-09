@@ -18,7 +18,7 @@ export default class Kit {
 		} else {
 			this.store = createStore(reducer);
 		}
-		this.countdown = new Countdown(Kit);
+		this.countdown = new Countdown(this);
 		this.catchables = new Catchables(this);
 		this.keyboard = new Keyboard(this.toggleStartGame.bind(this), this.showMenu.bind(this));
 		this.game = new Graveball(
