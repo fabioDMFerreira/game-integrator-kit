@@ -20,9 +20,10 @@ export default class Kit {
 		}
 		this.countdown = new Countdown(this);
 		this.catchables = new Catchables(this);
-		this.keyboard = new Keyboard(this.toggleStartGame.bind(this), this.showMenu.bind(this));
+		this.keyboard = new Keyboard(this);
 		this.gameStatus = new GameStatus(this);
 		this.ui = new Ui(this);
+
 
 		this.game = new Graveball(
 			this.keyboard.keysPressed,
@@ -30,6 +31,14 @@ export default class Kit {
 			this.catchables,
 			this.setControlsDescription.bind(this),
 		);
+
+		this.init();
+	}
+
+	init() {
+		const showMenu = this.showMenu.bind(this),
+			toggleStartGame = this.toggleStartGame.bind(this, [], showMenu);
+		this.keyboard.subscribe(27, toggleStartGame);
 	}
 
 	setControlsDescription(description) {

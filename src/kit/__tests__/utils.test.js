@@ -1,4 +1,4 @@
-import { executeFunction, parseArray } from './utils';
+import { executeFunction, parseArray } from '../utils';
 
 describe('kit.utils', () => {
 	it('executeFunction should call a function', () => {
