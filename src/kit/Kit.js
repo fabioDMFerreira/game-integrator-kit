@@ -24,18 +24,13 @@ export default class Kit {
 		this.gameStatus = new GameStatus(this);
 		this.ui = new Ui(this);
 
-
-		this.game = new Graveball(
-			this.keyboard.keysPressed,
-			this.endOfGame.bind(this),
-			this.catchables,
-			this.setControlsDescription.bind(this),
-		);
+		this.game = new Graveball(this);
 
 		this.init();
 	}
 
 	init() {
+		// on click escape menu should be shown
 		const showMenu = this.showMenu.bind(this),
 			toggleStartGame = this.toggleStartGame.bind(this, [], showMenu);
 		this.keyboard.subscribe(27, toggleStartGame);

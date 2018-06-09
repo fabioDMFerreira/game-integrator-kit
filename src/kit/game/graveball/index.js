@@ -16,15 +16,15 @@ let anguloCamera = 3 / 2 * Math.PI,
 	keyboardStatus = true;
 
 export default class Graveball extends Engine {
-	constructor(keyboard, finishGame, catchablesInterface, setControlsDescription) {
+	constructor(kit) {
 		super();
 		this.platform = [];
 		this.objMovable = [];
 		this.gifts = [];
-		this.keyboard = keyboard;
-		this.finishGame = finishGame;
-		this.catchablesInterface = catchablesInterface;
-		this.setControlsDescription = setControlsDescription;
+		this.keyboard = kit.keyboard.keysPressed;
+		this.finishGame = kit.endOfGame.bind(kit);
+		this.catchablesInterface = kit.catchables;
+		this.setControlsDescription = kit.setControlsDescription.bind(kit);
 
 		this.load();
 		this.subscribeRender(this.applyControls.bind(this));

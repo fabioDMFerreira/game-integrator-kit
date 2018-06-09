@@ -13,10 +13,10 @@ export default class Keyboard {
 
 	constructor() {
 		this.subscribers = {};
+		this.keysPressed = [];
 
 		document.addEventListener('keydown', this.onKeyDown.bind(this), false);
 		document.addEventListener('keyup', this.onKeyUp.bind(this), false);
-		this.keysPressed = [];
 	}
 
 	/**
