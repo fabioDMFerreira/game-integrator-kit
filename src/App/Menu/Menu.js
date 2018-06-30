@@ -41,10 +41,11 @@ Menu.propTypes = {
 	gameLost: PropTypes.bool,
 	gameStopped: PropTypes.bool,
 	reload: PropTypes.func.isRequired,
-	continue: PropTypes.func.isRequired,
+	continue: PropTypes.func,
 };
 
 Menu.defaultProps = {
+	continue: () => {},
 	gameWon: false,
 	gameLost: false,
 	gameStopped: false,
