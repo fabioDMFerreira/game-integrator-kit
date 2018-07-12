@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import Game from '../index';
+import Game from '../Game';
 
 function buildRender() {
 	const renderer = new THREE.WebGLRenderer({ antialias: true });

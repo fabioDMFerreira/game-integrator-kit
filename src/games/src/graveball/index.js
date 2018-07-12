@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-import Engine from '../engines/three';
+import Engine from '../../engines/three';
 import buildWorldObjects from './buildWorldObjects';
 import ControlsDescription from './ControlsDescription';
 

@@ -5,8 +5,9 @@ import './index.css';
 import HOApp from './App';
 import registerServiceWorker from './registerServiceWorker';
 import Kit from './kit';
+import Games from './games';
 
-const kit = new Kit(),
+const kit = new Kit(Games),
 	App = HOApp(kit);
 
 global.Kit = kit;
