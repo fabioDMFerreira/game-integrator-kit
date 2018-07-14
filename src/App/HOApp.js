@@ -1,12 +1,13 @@
 import { Map } from 'immutable';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { bool, func } from 'prop-types';
 
 import Game from './Game';
 import Menu from './Menu';
 import GameStatus from './GameStatus';
 import Controls from './Controls';
+import Popup from './Popup';
 
 /**
  * Higher order component that returns App component linked with kit methods
@@ -14,6 +15,20 @@ import Controls from './Controls';
  */
 const HOApp = (kit) => {
 	class App extends Component {
+		static propTypes = {
+			showPopup: bool,
+			showMenu: bool,
+			showControls: bool,
+			controls: func,
+		}
+
+		static defaultProps = {
+			showPopup: false,
+			showControls: false,
+			showMenu: false,
+			controls: () => <div />,
+		}
+
 		constructor() {
 			super();
 
@@ -25,7 +40,10 @@ const HOApp = (kit) => {
 
 			this.continueGame = kit.continue.bind(kit);
 			this.reload = kit.reload; // method that doesn't need context
+
+			this.hidePopup = kit.hidePopup.bind(kit);
 		}
+
 
 		render() {
 			return (
@@ -37,11 +55,12 @@ const HOApp = (kit) => {
 					<GameStatus
 						openMenu={this.openMenu}
 						openControls={this.openControls}
+						showPopup={this.showPopup}
 					/>
 					{
 						this.props.showMenu &&
 						<Menu
-							continue={this.continueGame}
+							continueGame={this.continueGame}
 							reload={this.reload}
 						/>}
 					{
@@ -50,38 +69,34 @@ const HOApp = (kit) => {
 							{this.props.controls()}
 						</Controls>
 					}
+
+					{
+						this.props.showPopup &&
+						<Popup onClose={this.hidePopup} />
+					}
 				</div>
 			);
 		}
 	}
 
-	App.propTypes = {
-		showMenu: PropTypes.bool,
-		showControls: PropTypes.bool,
-		controls: PropTypes.func,
-	};
-
-	App.defaultProps = {
-		showControls: false,
-		showMenu: false,
-		controls: () => <div />,
-	};
-
 	function mapStateToProps(state) {
 		let showMenu,
 			controls,
-			showControls;
+			showControls,
+			showPopup;
 
 		if (Map.isMap(state)) {
 			showMenu = state.get('showMenu');
 			controls = state.get('controlsDescription');
 			showControls = state.get('showControls');
+			showPopup = state.get('showPopup');
 		}
 
 		return {
 			showMenu,
 			controls,
 			showControls,
+			showPopup,
 		};
 	}
 

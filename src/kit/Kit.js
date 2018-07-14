@@ -119,6 +119,16 @@ export default class Kit {
 	setGameContainerSize(width, height) {
 		this.game.setSize(width, height);
 	}
+
+	showPopup() {
+		this.stop();
+		this.ui.showPopup();
+	}
+
+	hidePopup() {
+		this.ui.hidePopup();
+		this.continue();
+	}
 }
 
 Kit.prototype.reload = () => window.location.reload();

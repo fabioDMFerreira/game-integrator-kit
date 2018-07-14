@@ -1,10 +1,8 @@
 import React from 'react';
-import Enzyme, { shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { shallow } from 'enzyme';
 
 import Menu from '../Menu';
 
-Enzyme.configure({ adapter: new Adapter() });
 
 describe('Menu component', () => {
 	it('should show new game button that on click should call reload parameter function', () => {

@@ -1,4 +1,4 @@
-import { showMenu, showControls, hideMenu, hideControls } from './actions';
+import { showMenu, showControls, hideMenu, hideControls, showPopup, hidePopup, setPopupContent } from './actions';
 
 export default class GameStatus {
 	constructor(Kit) {
@@ -19,6 +19,22 @@ export default class GameStatus {
 
 	hideControls() {
 		this.store.dispatch(hideControls());
+	}
+
+	showPopup() {
+		this.store.dispatch(showPopup());
+	}
+
+	hidePopup() {
+		this.store.dispatch(hidePopup());
+	}
+
+	/**
+	 *
+	 * @param {element} content
+	 */
+	setPopupContent(content) {
+		this.store.dispatch(setPopupContent(content));
 	}
 }
 

@@ -3,6 +3,9 @@ import {
 	SHOW_CONTROLS,
 	HIDE_MENU,
 	HIDE_CONTROLS,
+	SHOW_POPUP,
+	HIDE_POPUP,
+	SET_POPUP_CONTENT,
 } from './constants';
 
 export function showMenu() {
@@ -26,5 +29,24 @@ export function hideMenu() {
 export function hideControls() {
 	return {
 		type: HIDE_CONTROLS,
+	};
+}
+
+export function showPopup() {
+	return {
+		type: SHOW_POPUP,
+	};
+}
+
+export function hidePopup() {
+	return {
+		type: HIDE_POPUP,
+	};
+}
+
+export function setPopupContent(content) {
+	return {
+		type: SET_POPUP_CONTENT,
+		content,
 	};
 }
