@@ -3,31 +3,21 @@ function capitalizeFirstLetter(string) {
 }
 
 export default function getGames(results) {
-	let games = {},
-		gamesNames,
-		dirContent;
-
-	const keys = results.keys();
-
-
-	games = keys.reduce(
-		(gamePathsObject, gamePath) => {
-			// extract game folder name
+	const keys = results.keys(),
+		// extract game folder name
+		gamesNames = keys.map((gamePath) => {
 			const nameOfGame = gamePath.match(/^.\/(\w*)\/index.js$/)[1];
 
-			gamePathsObject[capitalizeFirstLetter(nameOfGame)] = '';
+			return capitalizeFirstLetter(nameOfGame);
+		}),
+		// Import index javascript file from the games
+		dirContent = keys.map(results),
+		// Assign file game to its description in games list
+		games = dirContent.reduce((gamesList, value, index) => ({
+			...gamesList,
+			[gamesNames[index]]: value.default,
+		}), {});
 
-			return gamePathsObject;
-		}
-		, {},
-	);
-
-	gamesNames = Object.keys(games);
-
-	dirContent = keys.map(results);
-	dirContent.map((value, index) => {
-		games[gamesNames[index]] = value.default;
-	});
 
 	return games;
 }

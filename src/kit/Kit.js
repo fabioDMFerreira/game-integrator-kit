@@ -7,6 +7,8 @@ import Keyboard from './keyboard';
 import Catchables from './catchables';
 import Ui from './ui';
 
+import { GAMES_NOT_FOUND } from './ui/errorMessages/constants';
+
 import { executeFunction, parseArray } from './utils';
 import GameStatus from './gameStatus';
 
@@ -25,12 +27,19 @@ export default class Kit {
 
 		this.games = Games;
 
-		this.init();
+		if (!Games || typeof Games !== 'object' || !Object.keys(Games).length) {
+			this.ui.showError(GAMES_NOT_FOUND);
+		} else if (Object.keys(Games).length === 1) {
+			const Game = this.selectGame();
+			this.init(Game);
+		} else {
+			this.ui.showError('Support to multiple games are not available at the moment');
+		}
 	}
 
-	init() {
-		const Game = this.selectGame();
+	init([GameName, Game]) {
 		this.game = new Game(this);
+		this.gameStatus.setGameName(GameName);
 
 		// on click escape menu should be shown
 		const showMenu = this.showMenu.bind(this),
@@ -38,10 +47,15 @@ export default class Kit {
 		this.keyboard.subscribe(27, toggleStartGame);
 	}
 
+	/**
+	 * Returns game description and gameClass
+	 * @param {string} game
+	 * @returns {(string|class)[]} game - [0] Name of the game and [1] Class of the game
+	 */
 	selectGame(game) {
 		const descriptionOfGame = game || Object.keys(this.games)[0];
 
-		return this.games[descriptionOfGame];
+		return [descriptionOfGame, this.games[descriptionOfGame]];
 	}
 
 	setControlsDescription(description) {
@@ -53,8 +67,12 @@ export default class Kit {
 	}
 
 	load(element) {
-		this.game.renderOn(element);
-		this.start();
+		if (this.game) {
+			this.game.renderOn(element);
+			this.start();
+		} else {
+			console.warn('load::game not found');
+		}
 	}
 
 	start() {
@@ -117,7 +135,11 @@ export default class Kit {
 	}
 
 	setGameContainerSize(width, height) {
-		this.game.setSize(width, height);
+		if (this.game) {
+			this.game.setSize(width, height);
+		} else {
+			console.warn('setGameContainerSize::game not found');
+		}
 	}
 
 	showPopup() {

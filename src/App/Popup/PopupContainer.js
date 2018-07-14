@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import Popup from './Popup';
 
 function mapStateToProps(state) {
-	const content = state.get('popupContent');
+	const Content = state.get('popupContent');
 
 	return {
-		content,
+		Content,
 	};
 }
 

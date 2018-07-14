@@ -46,32 +46,38 @@ const HOApp = (kit) => {
 
 
 		render() {
+			const {
+				showMenu, showControls, controls, gameName, showPopup,
+			} = this.props;
 			return (
 				<div className="App">
 					<Game
 						load={this.loadGame}
 						setSize={this.setGameSize}
 					/>
-					<GameStatus
-						openMenu={this.openMenu}
-						openControls={this.openControls}
-						showPopup={this.showPopup}
-					/>
 					{
-						this.props.showMenu &&
+						gameName &&
+						<GameStatus
+							openMenu={this.openMenu}
+							openControls={this.openControls}
+							showPopup={this.showPopup}
+						/>
+					}
+					{
+						showMenu &&
 						<Menu
 							continueGame={this.continueGame}
 							reload={this.reload}
 						/>}
 					{
-						this.props.showControls &&
+						showControls &&
 						<Controls>
-							{this.props.controls()}
+							{controls()}
 						</Controls>
 					}
 
 					{
-						this.props.showPopup &&
+						showPopup &&
 						<Popup onClose={this.hidePopup} />
 					}
 				</div>
@@ -83,13 +89,15 @@ const HOApp = (kit) => {
 		let showMenu,
 			controls,
 			showControls,
-			showPopup;
+			showPopup,
+			gameName;
 
 		if (Map.isMap(state)) {
 			showMenu = state.get('showMenu');
 			controls = state.get('controlsDescription');
 			showControls = state.get('showControls');
 			showPopup = state.get('showPopup');
+			gameName = state.get('gameName');
 		}
 
 		return {
@@ -97,6 +105,7 @@ const HOApp = (kit) => {
 			controls,
 			showControls,
 			showPopup,
+			gameName,
 		};
 	}
 

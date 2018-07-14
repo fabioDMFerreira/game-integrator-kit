@@ -1,22 +1,22 @@
 import React from 'react';
-import { element, func } from 'prop-types';
+import { element, func, oneOfType } from 'prop-types';
 import { Dialog, DialogContent } from '@material-ui/core';
 
-const Popup = ({ content, onClose }) => (
+const Popup = ({ Content, onClose }) => (
 	<Dialog open onClose={onClose}>
 		<DialogContent>
-			{content}
+			<Content />
 		</DialogContent>
 	</Dialog >
 );
 
 Popup.propTypes = {
-	content: element,
+	Content: oneOfType([element, func]),
 	onClose: func.isRequired,
 };
 
 Popup.defaultProps = {
-	content: <div />,
+	Content: <div />,
 };
 
 export default Popup;

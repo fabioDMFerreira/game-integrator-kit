@@ -1,5 +1,7 @@
 import { showMenu, showControls, hideMenu, hideControls, showPopup, hidePopup, setPopupContent } from './actions';
 
+import popupElements from './errorMessages/popupElements';
+
 export default class GameStatus {
 	constructor(Kit) {
 		this.store = Kit.store;
@@ -35,6 +37,20 @@ export default class GameStatus {
 	 */
 	setPopupContent(content) {
 		this.store.dispatch(setPopupContent(content));
+	}
+
+	/**
+	 *
+	 * @param {string} errorMessage
+	 */
+	showError(errorMessage) {
+		if (errorMessage in popupElements) {
+			this.setPopupContent(popupElements[errorMessage]);
+		} else {
+			this.setPopupContent(errorMessage);
+		}
+
+		this.showPopup();
 	}
 }
 

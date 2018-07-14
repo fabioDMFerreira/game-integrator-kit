@@ -78,4 +78,18 @@ describe('GameStatus reducer', () => {
 
 		expect(actual).toEqual(expected);
 	});
+
+	it('on SET_GAME_NAME should update gameName if name is passed', () => {
+		let actual = reducer(undefined, actions.setGameName('lorem')),
+			expected = new Map({
+				gameName: 'lorem',
+			});
+
+		expect(actual).toEqual(expected);
+
+		actual = reducer(undefined, actions.setGameName());
+		expected = new Map({});
+
+		expect(actual).toEqual(expected);
+	});
 });

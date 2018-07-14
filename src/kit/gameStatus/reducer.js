@@ -7,6 +7,7 @@ import {
 	GAME_WON,
 	GAME_LOST,
 	SET_CONTROLS_DESCRIPTION,
+	SET_GAME_NAME,
 } from './constants';
 
 export default (state = new Map(), action) => {
@@ -44,6 +45,11 @@ export default (state = new Map(), action) => {
 			return state.set('controlsDescription', action.description);
 		}
 		console.warn('description is undefined');
+		return state;
+	case SET_GAME_NAME:
+		if (action.name) {
+			return state.set('gameName', action.name);
+		}
 		return state;
 	default:
 		return state;

@@ -20,7 +20,7 @@ describe('Menu component', () => {
 	it('should show continue game button if game is stopped and it is not finished and on click call continue property function', () => {
 		const continueGame = jest.fn();
 
-		let menu = shallow(<Menu gameStopped continue={continueGame} />),
+		let menu = shallow(<Menu gameStopped continueGame={continueGame} />),
 			continueGameButton = menu.find('#continue-game');
 		expect(continueGameButton).toHaveLength(1);
 		continueGameButton.simulate('click');

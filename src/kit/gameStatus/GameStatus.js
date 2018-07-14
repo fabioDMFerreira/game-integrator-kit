@@ -1,4 +1,4 @@
-import { startGame, stopGame, continueGame, gameWon, gameLost, setControlsDescription } from './actions';
+import { startGame, stopGame, continueGame, gameWon, gameLost, setControlsDescription, setGameName } from './actions';
 
 export default class GameStatus {
 	constructor(Kit) {
@@ -23,6 +23,10 @@ export default class GameStatus {
 
 	gameLost() {
 		this.store.dispatch(gameLost());
+	}
+
+	setGameName(name) {
+		this.store.dispatch(setGameName(name));
 	}
 
 	/**
