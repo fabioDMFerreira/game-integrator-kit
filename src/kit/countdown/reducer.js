@@ -1,6 +1,6 @@
 import { Map } from 'immutable';
 
-import { START_COUNTDOWN, STOP_COUNTDOWN, SET_COUNTDOWN_TIME, CONTINUE_COUNTDOWN, DECREMENT_COUNTDOWN_TIME } from './constants';
+import { START_COUNTDOWN, STOP_COUNTDOWN, SET_COUNTDOWN_TIME, CONTINUE_COUNTDOWN, DECREMENT_COUNTDOWN_TIME, ENABLE_COUNTDOWN } from './constants';
 
 export default function (state = new Map(), action) {
 	if (!action || !action.type) {
@@ -29,6 +29,9 @@ export default function (state = new Map(), action) {
 			return state.set('countdownTime', time - 1);
 		}
 		return state;
+	}
+	case ENABLE_COUNTDOWN:  {
+		return state.set('countdownEnabled', true);
 	}
 	default:
 		return state;

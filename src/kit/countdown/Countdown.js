@@ -1,10 +1,11 @@
-import { startCountdown, stopCountdown, continueCountdown, setCountdownTime, decrementCountdownTime } from './actions';
+import { startCountdown, stopCountdown, continueCountdown, setCountdownTime, decrementCountdownTime, enableCountdown } from './actions';
 
 export default class Countdown {
 	constructor(Kit) {
 		this.store = Kit.store;
 		this.endOfGame = Kit.endOfGame;
 		this.timer = null;
+		this.enable();
 	}
 
 	setTime(time) {
@@ -77,5 +78,9 @@ export default class Countdown {
 
 	stop() {
 		this.store.dispatch(stopCountdown());
+	}
+
+	enable() {
+		this.store.dispatch(enableCountdown());
 	}
 }

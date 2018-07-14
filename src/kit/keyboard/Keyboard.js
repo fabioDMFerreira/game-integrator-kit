@@ -10,13 +10,21 @@ export default class Keyboard {
 	//     68: "d"
 	// };
 
-
 	constructor() {
 		this.subscribers = {};
 		this.keysPressed = [];
 
 		document.addEventListener('keydown', this.onKeyDown.bind(this), false);
 		document.addEventListener('keyup', this.onKeyUp.bind(this), false);
+
+		function preventBubble(e) {
+			e.preventDefault();
+			e.stopPropagation();
+		}
+
+		// do not allow focused buttons to be clicked on tapping space or enter
+		this.subscribe(32, preventBubble);
+		this.subscribe(13, preventBubble);
 	}
 
 	/**
@@ -35,8 +43,9 @@ export default class Keyboard {
 		const keyPressed = event.keyCode;
 
 		if (!this.keysPressed[keyPressed] && this.subscribers[keyPressed]) {
-			this.subscribers[keyPressed].forEach(callback => callback());
+			this.subscribers[keyPressed].forEach(callback => callback(event));
 		}
+
 		this.keysPressed[keyPressed] = 'pressed';
 	}
 

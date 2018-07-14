@@ -1,5 +1,5 @@
 import { Map } from 'immutable';
-import { SET_NUMBER_CATCHABLES, DECREMENT_NUMBER_CATCHABLES } from './constants';
+import { SET_NUMBER_CATCHABLES, DECREMENT_NUMBER_CATCHABLES, ENABLE_CATCHABLES } from './constants';
 
 export default function (state = new Map(), action = {}) {
 	switch (action.type) {
@@ -20,6 +20,9 @@ export default function (state = new Map(), action = {}) {
 			return state.set('numberOfCatchables', numberOfCatchables - 1);
 		}
 		return state;
+	}
+	case ENABLE_CATCHABLES: {
+		return state.set('catchablesEnabled', true);
 	}
 	default: {
 		return state;

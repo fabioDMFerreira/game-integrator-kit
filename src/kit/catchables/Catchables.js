@@ -1,8 +1,9 @@
-import { setNumberCatchables, decrementNumberCatchables } from './actions';
+import { setNumberCatchables, decrementNumberCatchables, enableCatchables } from './actions';
 
 export default class Catchables {
 	constructor(Kit) {
 		this.store = Kit.store;
+		this.enable();
 	}
 
 	/**
@@ -19,5 +20,9 @@ export default class Catchables {
      */
 	decrease() {
 		this.store.dispatch(decrementNumberCatchables());
+	}
+
+	enable() {
+		this.store.dispatch(enableCatchables());
 	}
 }

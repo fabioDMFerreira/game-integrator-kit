@@ -4,6 +4,7 @@ import {
 	CONTINUE_COUNTDOWN,
 	SET_COUNTDOWN_TIME,
 	DECREMENT_COUNTDOWN_TIME,
+	ENABLE_COUNTDOWN,
 } from './constants';
 
 export function startCountdown() {
@@ -34,5 +35,11 @@ export function setCountdownTime(time) {
 export function decrementCountdownTime() {
 	return {
 		type: DECREMENT_COUNTDOWN_TIME,
+	};
+}
+
+export function enableCountdown() {
+	return {
+		type: ENABLE_COUNTDOWN,
 	};
 }

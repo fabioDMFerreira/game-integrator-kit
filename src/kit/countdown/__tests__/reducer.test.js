@@ -1,7 +1,7 @@
 import { Map } from 'immutable';
 
 import reducer from '../reducer.js';
-import { startCountdown, stopCountdown, continueCountdown, setCountdownTime, decrementCountdownTime } from '../actions';
+import { startCountdown, stopCountdown, continueCountdown, setCountdownTime, decrementCountdownTime, enableCountdown } from '../actions';
 
 describe('Countdown reducer', () => {
 	it('should return empty state if any action is passed', () => {
@@ -72,6 +72,13 @@ describe('Countdown reducer', () => {
 
 		actual = reducer(new Map({ countdownTime: 10 }), decrementCountdownTime());
 		expected = new Map({ countdownTime: 9 });
+		expect(actual).toEqual(expected);
+	});
+
+	it('on ENABLE_COUNTDOWN it should set countdownEnabled as true', () => {
+		const actual = reducer(new Map(), enableCountdown()),
+			expected = new Map({ countdownEnabled: true });
+
 		expect(actual).toEqual(expected);
 	});
 });

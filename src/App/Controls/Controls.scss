@@ -1,11 +1,4 @@
-@import 'sass/shared.scss';
-#controls-container {
-    @include popup-container();
-}
-
 #controls-content {
-    background-color: #fff;
-    padding: 10px;
     ul {
         list-style-type: none;
         padding: 0;

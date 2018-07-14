@@ -1,7 +1,7 @@
 import { Map } from 'immutable';
 
 import reducer from '../reducer';
-import { setNumberCatchables, decrementNumberCatchables } from '../actions';
+import { setNumberCatchables, decrementNumberCatchables, enableCatchables } from '../actions';
 
 
 describe('Catchables reducer', () => {
@@ -54,6 +54,13 @@ describe('Catchables reducer', () => {
 		state = new Map({ numberOfCatchables: 0 });
 		expected = new Map({ numberOfCatchables: 0 });
 		actual = reducer(state, decrementNumberCatchables());
+
+		expect(actual).toEqual(expected);
+	});
+
+	it('action ENABLE_CATCHABLES should set catchablesEnabled as true', () => {
+		const	expected = new Map({ catchablesEnabled: true }),
+			actual = reducer(new Map(), enableCatchables());
 
 		expect(actual).toEqual(expected);
 	});

@@ -18,6 +18,8 @@ let anguloCamera = 3 / 2 * Math.PI,
 export default class Graveball extends Engine {
 	constructor(kit) {
 		super();
+		// kit.enableCountdown();
+		kit.enableCatchables();
 		this.platform = [];
 		this.objMovable = [];
 		this.gifts = [];

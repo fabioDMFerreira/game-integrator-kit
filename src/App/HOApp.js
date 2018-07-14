@@ -5,7 +5,7 @@ import { bool, func } from 'prop-types';
 
 import Game from './Game';
 import Menu from './Menu';
-import GameStatus from './GameStatus';
+import InfoOptions from './InfoOptions';
 import Controls from './Controls';
 import Popup from './Popup';
 
@@ -37,11 +37,13 @@ const HOApp = (kit) => {
 
 			this.openMenu = kit.showMenu.bind(kit);
 			this.openControls = kit.showControls.bind(kit);
+			this.closeControls = kit.hideControls.bind(kit);
+			this.closeMenu = kit.hideMenu.bind(kit);
 
 			this.continueGame = kit.continue.bind(kit);
 			this.reload = kit.reload; // method that doesn't need context
 
-			this.hidePopup = kit.hidePopup.bind(kit);
+			this.closePopup = kit.hidePopup.bind(kit);
 		}
 
 
@@ -57,7 +59,7 @@ const HOApp = (kit) => {
 					/>
 					{
 						gameName &&
-						<GameStatus
+						<InfoOptions
 							openMenu={this.openMenu}
 							openControls={this.openControls}
 							showPopup={this.showPopup}
@@ -66,19 +68,19 @@ const HOApp = (kit) => {
 					{
 						showMenu &&
 						<Menu
-							continueGame={this.continueGame}
+							continueGame={this.closeMenu}
 							reload={this.reload}
 						/>}
 					{
 						showControls &&
-						<Controls>
+						<Controls onClose={this.closeControls}>
 							{controls()}
 						</Controls>
 					}
 
 					{
 						showPopup &&
-						<Popup onClose={this.hidePopup} />
+						<Popup onClose={this.closePopup} />
 					}
 				</div>
 			);

@@ -19,8 +19,6 @@ export default class Kit {
 		} else {
 			this.store = createStore(reducer);
 		}
-		this.countdown = new Countdown(this);
-		this.catchables = new Catchables(this);
 		this.keyboard = new Keyboard(this);
 		this.gameStatus = new GameStatus(this);
 		this.ui = new Ui(this);
@@ -37,14 +35,28 @@ export default class Kit {
 		}
 	}
 
+	enableCountdown() {
+		this.countdown = new Countdown(this);
+	}
+
+	enableCatchables() {
+		this.catchables = new Catchables(this);
+	}
+
 	init([GameName, Game]) {
 		this.game = new Game(this);
 		this.gameStatus.setGameName(GameName);
 
-		// on click escape menu should be shown
-		const showMenu = this.showMenu.bind(this),
-			toggleStartGame = this.toggleStartGame.bind(this, [], showMenu);
-		this.keyboard.subscribe(27, toggleStartGame);
+
+		// on click escape show menu if game is running
+		this.keyboard.subscribe(27, () => {
+			const state = this.store.getState(),
+				gameStopped = state.get('gameStopped');
+
+			if (!gameStopped) {
+				this.showMenu();
+			}
+		});
 	}
 
 	/**
@@ -76,25 +88,30 @@ export default class Kit {
 	}
 
 	start() {
-		this.ui.hideMenu();
 		this.gameStatus.startGame();
 		this.game.startRender();
-		this.countdown.setTime(300);
-		this.countdown.start();
+
+		if (this.countdown) {
+			this.countdown.setTime(300);
+			this.countdown.start();
+		}
 	}
 
 	stop() {
 		this.gameStatus.stopGame();
 		this.game.stopRender();
-		this.countdown.stop();
+
+		if (this.countdown) {
+			this.countdown.stop();
+		}
 	}
 
 	continue() {
-		this.ui.hideMenu();
-		this.ui.hideControls();
 		this.gameStatus.continueGame();
 		this.game.startRender();
-		this.countdown.continue();
+		if (this.countdown) {
+			this.countdown.continue();
+		}
 	}
 
 	/**
@@ -119,9 +136,19 @@ export default class Kit {
 		this.ui.showMenu();
 	}
 
+	hideMenu() {
+		this.ui.hideMenu();
+		this.continue();
+	}
+
 	showControls() {
 		this.stop();
 		this.ui.showControls();
+	}
+
+	hideControls() {
+		this.ui.hideControls();
+		this.continue();
 	}
 
 	won() {
