@@ -3,7 +3,6 @@ import { setNumberCatchables, decrementNumberCatchables, enableCatchables } from
 export default class Catchables {
 	constructor(Kit) {
 		this.store = Kit.store;
-		this.enable();
 	}
 
 	/**

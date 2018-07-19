@@ -1,13 +1,14 @@
 import { Map } from 'immutable';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bool, func } from 'prop-types';
+import { bool, func, string } from 'prop-types';
 
 import Game from './Game';
 import Menu from './Menu';
 import InfoOptions from './InfoOptions';
 import Controls from './Controls';
 import Popup from './Popup';
+import SelectGame from './SelectGame';
 
 /**
  * Higher order component that returns App component linked with kit methods
@@ -20,6 +21,7 @@ const HOApp = (kit) => {
 			showMenu: bool,
 			showControls: bool,
 			controls: func,
+			game: string,
 		}
 
 		static defaultProps = {
@@ -27,6 +29,7 @@ const HOApp = (kit) => {
 			showControls: false,
 			showMenu: false,
 			controls: () => <div />,
+			game: '',
 		}
 
 		constructor() {
@@ -44,21 +47,32 @@ const HOApp = (kit) => {
 			this.reload = kit.reload; // method that doesn't need context
 
 			this.closePopup = kit.hidePopup.bind(kit);
+
+			this.selectGame = kit.selectGame.bind(kit);
+
+			this.games = kit.getGamesNames();
 		}
 
 
 		render() {
 			const {
-				showMenu, showControls, controls, gameName, showPopup,
+				showMenu, showControls, controls, game, showPopup,
 			} = this.props;
 			return (
 				<div className="App">
-					<Game
-						load={this.loadGame}
-						setSize={this.setGameSize}
-					/>
 					{
-						gameName &&
+						!game && !showPopup &&
+						<SelectGame games={this.games} select={this.selectGame} />
+					}
+					{
+						game &&
+						<Game
+							load={this.loadGame}
+							setSize={this.setGameSize}
+						/>
+					}
+					{
+						game &&
 						<InfoOptions
 							openMenu={this.openMenu}
 							openControls={this.openControls}
@@ -66,13 +80,13 @@ const HOApp = (kit) => {
 						/>
 					}
 					{
-						showMenu &&
+						showMenu && !showPopup &&
 						<Menu
 							continueGame={this.closeMenu}
 							reload={this.reload}
 						/>}
 					{
-						showControls &&
+						showControls && !showPopup &&
 						<Controls onClose={this.closeControls}>
 							{controls()}
 						</Controls>
@@ -92,14 +106,14 @@ const HOApp = (kit) => {
 			controls,
 			showControls,
 			showPopup,
-			gameName;
+			game;
 
 		if (Map.isMap(state)) {
 			showMenu = state.get('showMenu');
 			controls = state.get('controlsDescription');
 			showControls = state.get('showControls');
 			showPopup = state.get('showPopup');
-			gameName = state.get('gameName');
+			game = state.get('game');
 		}
 
 		return {
@@ -107,7 +121,7 @@ const HOApp = (kit) => {
 			controls,
 			showControls,
 			showPopup,
-			gameName,
+			game,
 		};
 	}
 

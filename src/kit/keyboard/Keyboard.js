@@ -16,15 +16,6 @@ export default class Keyboard {
 
 		document.addEventListener('keydown', this.onKeyDown.bind(this), false);
 		document.addEventListener('keyup', this.onKeyUp.bind(this), false);
-
-		function preventBubble(e) {
-			e.preventDefault();
-			e.stopPropagation();
-		}
-
-		// do not allow focused buttons to be clicked on tapping space or enter
-		this.subscribe(32, preventBubble);
-		this.subscribe(13, preventBubble);
 	}
 
 	/**

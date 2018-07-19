@@ -2,7 +2,7 @@ function capitalizeFirstLetter(string) {
 	return string[0].toUpperCase() + string.slice(1);
 }
 
-export default function getGames(results) {
+export function loadGamesFromContext(results) {
 	const keys = results.keys(),
 		// extract game folder name
 		gamesNames = keys.map((gamePath) => {
@@ -21,3 +21,7 @@ export default function getGames(results) {
 
 	return games;
 }
+
+export default () =>
+	loadGamesFromContext(require.context('./games', true, /^.\/\w*\/index.js$/));
+

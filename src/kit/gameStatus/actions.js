@@ -5,7 +5,7 @@ import {
 	GAME_WON,
 	GAME_LOST,
 	SET_CONTROLS_DESCRIPTION,
-	SET_GAME_NAME,
+	SET_GAME_SELECTED,
 } from './constants';
 
 
@@ -46,9 +46,9 @@ export function setControlsDescription(description) {
 	};
 }
 
-export function setGameName(name) {
+export function setGameSelected(name) {
 	return {
-		type: SET_GAME_NAME,
+		type: SET_GAME_SELECTED,
 		name,
 	};
 }

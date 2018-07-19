@@ -6,7 +6,9 @@ import './sass/index.css';
 import HOApp from './App';
 import registerServiceWorker from './registerServiceWorker';
 import Kit from './kit';
-import Games from './games';
+import getGames from './getGames';
+
+const Games = getGames();
 
 const kit = new Kit(Games),
 	App = HOApp(kit);

@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-import Engine from '../../engines/three';
+import threeEngine from './threeEngine';
 import buildWorldObjects from './buildWorldObjects';
 import ControlsDescription from './ControlsDescription';
 
@@ -15,17 +15,16 @@ let anguloCamera = 3 / 2 * Math.PI,
 	distanciaCamera = 500,
 	keyboardStatus = true;
 
-export default class Graveball extends Engine {
+export default class Graveball extends threeEngine {
 	constructor(kit) {
 		super();
 		// kit.enableCountdown();
-		kit.enableCatchables();
 		this.platform = [];
 		this.objMovable = [];
 		this.gifts = [];
 		this.keyboard = kit.keyboard.keysPressed;
 		this.finishGame = kit.endOfGame.bind(kit);
-		this.catchablesInterface = kit.catchables;
+		this.catchablesInterface = kit.enableCatchables();
 		this.setControlsDescription = kit.setControlsDescription.bind(kit);
 
 		this.load();

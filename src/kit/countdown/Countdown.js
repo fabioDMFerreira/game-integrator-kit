@@ -5,7 +5,6 @@ export default class Countdown {
 		this.store = Kit.store;
 		this.endOfGame = Kit.endOfGame;
 		this.timer = null;
-		this.enable();
 	}
 
 	setTime(time) {

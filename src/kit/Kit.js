@@ -1,6 +1,7 @@
 import { createStore } from 'redux';
 import { devToolsEnhancer } from 'redux-devtools-extension';
 
+import generateGameInterface from './generateGameInterface';
 import reducer from './reducer';
 import Countdown from './countdown';
 import Keyboard from './keyboard';
@@ -25,28 +26,18 @@ export default class Kit {
 
 		this.games = Games;
 
-		if (!Games || typeof Games !== 'object' || !Object.keys(Games).length) {
-			this.ui.showError(GAMES_NOT_FOUND);
-		} else if (Object.keys(Games).length === 1) {
-			const Game = this.selectGame();
-			this.init(Game);
-		} else {
-			this.ui.showError('Support to multiple games are not available at the moment');
+		this.init(Games);
+	}
+
+	init(Games) {
+		function preventBubble(e) {
+			e.preventDefault();
+			e.stopPropagation();
 		}
-	}
 
-	enableCountdown() {
-		this.countdown = new Countdown(this);
-	}
-
-	enableCatchables() {
-		this.catchables = new Catchables(this);
-	}
-
-	init([GameName, Game]) {
-		this.game = new Game(this);
-		this.gameStatus.setGameName(GameName);
-
+		// do not allow focused buttons to be clicked on tapping space or enter
+		this.keyboard.subscribe(32, preventBubble);
+		this.keyboard.subscribe(13, preventBubble);
 
 		// on click escape show menu if game is running
 		this.keyboard.subscribe(27, () => {
@@ -57,6 +48,41 @@ export default class Kit {
 				this.showMenu();
 			}
 		});
+
+		if (!Games || typeof Games !== 'object' || !Object.keys(Games).length) {
+			this.ui.showError(GAMES_NOT_FOUND);
+		}
+	}
+
+
+	enableCountdown() {
+		this.countdown = new Countdown(this);
+		this.countdown.enable();
+		return {
+			setTime: this.countdown.setTime.bind(this.countdown),
+			stop: this.countdown.stop.bind(this.countdown),
+			continue: this.countdown.stop.bind(this.countdown),
+		};
+	}
+
+	enableCatchables() {
+		this.catchables = new Catchables(this);
+		this.catchables.enable();
+		return {
+			set: this.catchables.set.bind(this.catchables),
+			decrease: this.catchables.decrease.bind(this.catchables),
+		};
+	}
+
+	getGamesNames() {
+		return Object.keys(this.games);
+	}
+
+
+	selectGame(gameName) {
+		const [GameName, Game] = this.getGameByName(gameName);
+		this.game = new Game(generateGameInterface(this));
+		this.gameStatus.setGameSelected(GameName);
 	}
 
 	/**
@@ -64,7 +90,7 @@ export default class Kit {
 	 * @param {string} game
 	 * @returns {(string|class)[]} game - [0] Name of the game and [1] Class of the game
 	 */
-	selectGame(game) {
+	getGameByName(game) {
 		const descriptionOfGame = game || Object.keys(this.games)[0];
 
 		return [descriptionOfGame, this.games[descriptionOfGame]];
