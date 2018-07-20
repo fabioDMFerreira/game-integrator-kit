@@ -1,5 +1,8 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
+#games directory
+/src/games/*
+
 # styles
 src/**/*.css
 
