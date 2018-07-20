@@ -3,6 +3,9 @@
 #games directory
 /src/games/*
 
+# exception to the rule
+!/src/games/.gitkeep 
+
 # styles
 src/**/*.css
 
