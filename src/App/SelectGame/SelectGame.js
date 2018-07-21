@@ -1,19 +1,38 @@
 import React from 'react';
-import { arrayOf, string, func } from 'prop-types';
+import { object, func } from 'prop-types';
 import { Dialog, DialogContent, Button } from '@material-ui/core';
 
 const SelectGame = ({ games, select }) => (
 	<Dialog open>
 		<DialogContent>
-			{games
-                && games.length
-                && games.map(game => <Button key={game} onClick={() => select(game)}>{game}</Button>)}
+			{
+				(() => {
+					if (games && Object.keys(games).length) {
+						return Object.keys(games).map((gameName) => {
+							if (games[gameName] === 'success') {
+								return <Button color="primary" key={gameName} onClick={() => select(gameName)}>{gameName}</Button>;
+							}
+
+							return (<div className="invalid-game-container">
+								{
+									`${gameName} can not be loaded`
+								}
+								<br />
+								<small>{games[gameName]}</small>
+               </div>);
+						});
+					}
+
+					return 'Games not found. Please add your games directories into "src/games".';
+				})()
+			}
+			{}
 		</DialogContent>
 	</Dialog>
 );
 
 SelectGame.propTypes = {
-	games: arrayOf(string),
+	games: object,
 	select: func.isRequired,
 };
 

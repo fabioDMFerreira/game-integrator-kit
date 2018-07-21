@@ -50,7 +50,7 @@ const HOApp = (kit) => {
 
 			this.selectGame = kit.selectGame.bind(kit);
 
-			this.games = kit.getGamesNames();
+			this.gamesStatus = kit.getGamesStatus();
 		}
 
 
@@ -62,7 +62,7 @@ const HOApp = (kit) => {
 				<div className="App">
 					{
 						!game && !showPopup &&
-						<SelectGame games={this.games} select={this.selectGame} />
+						<SelectGame games={this.gamesStatus} select={this.selectGame} />
 					}
 					{
 						game &&

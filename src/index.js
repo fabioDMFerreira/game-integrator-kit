@@ -10,8 +10,10 @@ import getGames from './getGames';
 
 const Games = getGames();
 
-const kit = new Kit(Games),
+const kit = new Kit(),
 	App = HOApp(kit);
+
+kit.setGames(Games);
 
 global.Kit = kit;
 

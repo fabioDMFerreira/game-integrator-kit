@@ -14,7 +14,7 @@ import { executeFunction, parseArray } from './utils';
 import GameStatus from './gameStatus';
 
 export default class Kit {
-	constructor(Games) {
+	constructor() {
 		if (process.env.NODE_ENV === 'development') {
 			this.store = createStore(reducer, devToolsEnhancer());
 		} else {
@@ -24,12 +24,47 @@ export default class Kit {
 		this.gameStatus = new GameStatus(this);
 		this.ui = new Ui(this);
 
-		this.games = Games;
-
-		this.init(Games);
+		this.init();
 	}
 
-	init(Games) {
+	validateGame(Game) {
+		const mustHaveMethods = ['renderOn', 'startRender', 'setSize', 'loadKit'];
+
+		if (!Game) {
+			return {
+				errorMessage: '"index.js" file must expose an object with methods: \'renderOn\', \'startRender\', \'setSize\', \'loadKit\'',
+			};
+		}
+
+		for (let i = 0; i < mustHaveMethods.length; i++) {
+			if (!(mustHaveMethods[i] in Game)) {
+				return {
+					errorMessage: `${mustHaveMethods[i]} must be exposed in index.js of your game directory`,
+				};
+			} else if (!(Game[mustHaveMethods[i]] instanceof Function)) {
+				return {
+					errorMessage: `${mustHaveMethods[i]} must be a function`,
+				};
+			}
+		}
+
+		return Game;
+	}
+
+	setGames(Games) {
+		if (!Games || typeof Games !== 'object' || !Object.keys(Games).length) {
+			return this.ui.showError(GAMES_NOT_FOUND);
+		}
+
+		const GamesValidated = Object.keys(Games).reduce((gamesList, gameName) => {
+			gamesList[gameName] = this.validateGame(Games[gameName]);
+			return gamesList;
+		}, {});
+
+		this.games = GamesValidated;
+	}
+
+	init() {
 		function preventBubble(e) {
 			e.preventDefault();
 			e.stopPropagation();
@@ -48,10 +83,6 @@ export default class Kit {
 				this.showMenu();
 			}
 		});
-
-		if (!Games || typeof Games !== 'object' || !Object.keys(Games).length) {
-			this.ui.showError(GAMES_NOT_FOUND);
-		}
 	}
 
 
@@ -74,14 +105,30 @@ export default class Kit {
 		};
 	}
 
-	getGamesNames() {
-		return Object.keys(this.games);
+	/**
+	 * @returns {array.<string>} GamesStatus
+	 */
+	getGamesStatus() {
+		if (!this.games) {
+			return {};
+		}
+		return Object.keys(this.games).reduce(
+			(gamesStatusList, gameName) => ({
+				...gamesStatusList,
+				[gameName]: this.games[gameName].errorMessage || 'success',
+			})
+			, {},
+		);
 	}
 
 
 	selectGame(gameName) {
 		const [GameName, Game] = this.getGameByName(gameName);
-		this.game = new Game(generateGameInterface(this));
+
+		// add methods of kit into game
+		Game.loadKit(generateGameInterface(this));
+
+		this.game = Game;
 		this.gameStatus.setGameSelected(GameName);
 	}
 
