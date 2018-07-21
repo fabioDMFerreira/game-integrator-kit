@@ -20,6 +20,7 @@ describe('GameStatus reducer', () => {
 		const actual = reducer(undefined, actions.startGame()),
 			expected = new Map({
 				gameStarted: true,
+				gameStopped: false,
 				gameWon: false,
 				gameLost: false,
 			});
@@ -88,7 +89,7 @@ describe('GameStatus reducer', () => {
 		expect(actual).toEqual(expected);
 
 		actual = reducer(undefined, actions.setGameSelected());
-		expected = new Map({});
+		expected = new Map({ game: null });
 
 		expect(actual).toEqual(expected);
 	});

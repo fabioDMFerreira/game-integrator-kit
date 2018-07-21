@@ -16,6 +16,11 @@ export default class Keyboard {
 
 		document.addEventListener('keydown', this.onKeyDown.bind(this), false);
 		document.addEventListener('keyup', this.onKeyUp.bind(this), false);
+
+		// deny access to context menu
+		document.oncontextmenu = function () {
+			return false;
+		};
 	}
 
 	/**

@@ -19,6 +19,7 @@ export default (state = new Map(), action) => {
 	case START_GAME:
 		return state.merge({
 			gameStarted: true,
+			gameStopped:false,
 			gameWon: false,
 			gameLost: false,
 		});
@@ -47,10 +48,12 @@ export default (state = new Map(), action) => {
 		console.warn('description is undefined');
 		return state;
 	case SET_GAME_SELECTED:
-		if (action.name) {
+		if (typeof (action.name) === 'string') {
 			return state.set('game', action.name);
 		}
-		return state;
+
+		return state.set('game', null);
+
 	default:
 		return state;
 	}

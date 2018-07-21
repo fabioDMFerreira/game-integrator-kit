@@ -35,7 +35,7 @@ describe('Menu component', () => {
 		expect(continueGameButton).toHaveLength(0);
 	});
 
-	it('should text game won if prop is passed', () => {
+	it('should show text game won if prop is passed', () => {
 		const newGame = jest.fn(),
 			menu = shallow(<Menu reload={newGame} gameWon />),
 			textWon = menu.find('h1[children="Congratulations!!!"]');
@@ -43,7 +43,7 @@ describe('Menu component', () => {
 		expect(textWon).toHaveLength(1);
 	});
 
-	it('should text game won if prop is false', () => {
+	it('should show text game won if prop is false', () => {
 		const newGame = jest.fn(),
 			menu = shallow(<Menu reload={newGame} gameWon={false} />),
 			textWon = menu.find('h1[children="Congratulations!!!"]');
@@ -51,7 +51,7 @@ describe('Menu component', () => {
 		expect(textWon).toHaveLength(0);
 	});
 
-	it('should text game lost if prop is passed', () => {
+	it('should show text game lost if prop is passed', () => {
 		const newGame = jest.fn(),
 			menu = shallow(<Menu reload={newGame} gameLost />),
 			textLost = menu.find('h1[children="Try again!!!"]');
@@ -59,11 +59,24 @@ describe('Menu component', () => {
 		expect(textLost).toHaveLength(1);
 	});
 
-	it('should text game lost if prop is false', () => {
+	it('should show text game lost if prop is false', () => {
 		const newGame = jest.fn(),
 			menu = shallow(<Menu reload={newGame} gameLost={false} />),
 			textLost = menu.find('h1[children="Try again!!!"]');
 
 		expect(textLost).toHaveLength(0);
+	});
+
+	it('should have finish game feature', () => {
+		const newGame = jest.fn(),
+			finishGame = jest.fn(),
+			menu = shallow(<Menu reload={newGame} finishGame={finishGame} gameLost={false} />),
+			finishGameOption = menu.find('#finish-game');
+
+		expect(finishGameOption).toHaveLength(1);
+
+		finishGameOption.simulate('click');
+
+		expect(finishGame).toHaveBeenCalledTimes(1);
 	});
 });

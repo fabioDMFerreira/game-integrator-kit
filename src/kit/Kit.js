@@ -28,7 +28,7 @@ export default class Kit {
 	}
 
 	validateGame(Game) {
-		const mustHaveMethods = ['renderOn', 'startRender', 'setSize', 'loadKit'];
+		const mustHaveMethods = ['renderOn', 'startRender', 'setSize', 'loadKit', 'stopRender'];
 
 		if (!Game) {
 			return {
@@ -62,6 +62,12 @@ export default class Kit {
 		}, {});
 
 		this.games = GamesValidated;
+	}
+
+	finishGame() {
+		this.ui.hideMenu();
+		this.game = null;
+		this.gameStatus.setGameSelected();
 	}
 
 	init() {

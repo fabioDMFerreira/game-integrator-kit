@@ -13,13 +13,14 @@ const SelectGame = ({ games, select }) => (
 								return <Button color="primary" key={gameName} onClick={() => select(gameName)}>{gameName}</Button>;
 							}
 
-							return (<div className="invalid-game-container">
-								{
-									`${gameName} can not be loaded`
-								}
-								<br />
-								<small>{games[gameName]}</small>
-               </div>);
+							return (
+								<div className="invalid-game-container">
+									{
+										`${gameName} can not be loaded`
+									}
+									<br />
+									<small>{games[gameName]}</small>
+								</div>);
 						});
 					}
 
