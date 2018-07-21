@@ -137,11 +137,11 @@ describe('Countdown', () => {
 
 	it('decrementTime should end the game if it was not set a time', () => {
 		jest.useFakeTimers();
-		const countdown = new Countdown(mockKit);
+		const countdown = new Countdown(mockKit),
+			spy = jest.spyOn(countdown, 'endOfGame');
+		countdown.decrementTime('game1');
 
-		countdown.decrementTime();
-
-		expect(countdown.endOfGame).toHaveBeenCalledTimes(1);
+		expect(spy).toHaveBeenCalledTimes(1);
 	});
 
 	it('checkCountdownEnd should return true if countdown time does not exist or is zero', () => {

@@ -70,7 +70,11 @@ describe('Menu component', () => {
 	it('should have finish game feature', () => {
 		const newGame = jest.fn(),
 			selectGame = jest.fn(),
-			menu = shallow(<Menu reload={newGame} selectGame={selectGame} gameLost={false} />),
+			menu = shallow(<Menu
+				reload={newGame}
+				pauseGameAndShowGamesList={selectGame}
+				gameLost={false}
+			               />),
 			selectGameOption = menu.find('#select-game');
 
 		expect(selectGameOption).toHaveLength(1);

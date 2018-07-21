@@ -27,13 +27,13 @@ Menu.propTypes = {
 	gameStopped: PropTypes.bool,
 	reload: PropTypes.func,
 	continueGame: PropTypes.func,
-	selectGame: PropTypes.func,
+	pauseGameAndShowGamesList: PropTypes.func,
 };
 
 Menu.defaultProps = {
 	reload: () => { },
 	continueGame: () => { },
-	selectGame: () => {},
+	pauseGameAndShowGamesList: () => {},
 	gameWon: false,
 	gameLost: false,
 	gameStopped: false,
