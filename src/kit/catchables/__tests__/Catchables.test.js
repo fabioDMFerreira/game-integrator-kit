@@ -19,10 +19,11 @@ describe('Catchables', () => {
 		const catchables = new Catchables(mockKit),
 			spy = jest.spyOn(actions, 'setNumberCatchables', 'set');
 
-		catchables.set(10);
+		catchables.set('game1', 10);
 
 		expect(spy.mock.calls.length).toBe(1);
-		expect(spy.mock.calls[0][0]).toBe(10);
+		expect(spy.mock.calls[0][0]).toBe('game1');
+		expect(spy.mock.calls[0][1]).toBe(10);
 		expect(catchables.store.dispatch).toHaveBeenCalledTimes(1);
 
 		spy.mockReset();

@@ -52,7 +52,7 @@ const HOApp = (kit) => {
 
 			this.gamesStatus = kit.getGamesStatus();
 
-			this.finishGame = kit.finishGame.bind(kit);
+			this.pauseGameAndShowGamesList = kit.pauseGameAndShowGamesList.bind(kit);
 		}
 
 
@@ -86,7 +86,7 @@ const HOApp = (kit) => {
 						<Menu
 							continueGame={this.closeMenu}
 							reload={this.reload}
-							finishGame={this.finishGame}
+							pauseGameAndShowGamesList={this.pauseGameAndShowGamesList}
 						/>}
 					{
 						showControls && !showPopup &&

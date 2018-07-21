@@ -17,8 +17,7 @@
     "reduce-reducers": "0.3.0",
     "redux": "4.0.0",
     "redux-devtools-extension": "2.13.2",
-    "sass-flex-mixin": "1.0.3",
-    "three": "0.94.0"
+    "sass-flex-mixin": "1.0.3"
   },
   "scripts": {
     "build-css": "node-sass-chokidar -o src/ --include-path ./src --include-path ./node_modules src/",

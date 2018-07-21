@@ -1,4 +1,4 @@
-import { Map } from 'immutable';
+import { Map, fromJS } from 'immutable';
 
 import Countdown from '../Countdown';
 import * as actions from '../actions';
@@ -22,19 +22,35 @@ class MockKit {
 let mockKit,
 	decrementCountdownTimeSpy;
 
-function getCountdown(data) {
-	mockKit.state = new Map(data);
+function getCountdown(gameName, data) {
+	mockKit.state = fromJS({
+		gameState: {
+			[gameName]: data,
+		},
+	});
 	return new Countdown(mockKit);
 }
 
-function getCountdownWithTime(countdownTime) {
-	mockKit.state = new Map({ countdownTime });
+function getCountdownWithTime(gameName, countdownTime) {
+	mockKit.state = fromJS({
+		gameState: {
+			[gameName]: {
+				countdownTime,
+			},
+		},
+	});
 	return new Countdown(mockKit);
 }
 
 
-function getCountdownWithStatusStopped(countdownStopped) {
-	mockKit.state = new Map({ countdownStopped });
+function getCountdownWithStatusStopped(gameName, countdownStopped) {
+	mockKit.state = fromJS({
+		gameState: {
+			[gameName]: {
+				countdownStopped,
+			},
+		},
+	});
 	return new Countdown(mockKit);
 }
 
@@ -52,35 +68,38 @@ describe('Countdown', () => {
 		const countdown = new Countdown(mockKit),
 			spy = jest.spyOn(actions, 'setCountdownTime', 'set');
 
-		countdown.setTime(300);
+		countdown.setTime('game1', 300);
 
 		expect(countdown.store.dispatch).toHaveBeenCalledTimes(1);
 		expect(spy.mock.calls.length).toBe(1);
-		expect(spy.mock.calls[0][0]).toBe(300);
+		expect(spy.mock.calls[0][0]).toBe('game1');
+		expect(spy.mock.calls[0][1]).toBe(300);
 	});
 
 	it('stop should dispatch an action that updates countdown status', () => {
 		const countdown = new Countdown(mockKit),
 			spy = jest.spyOn(actions, 'stopCountdown', 'set');
 
-		countdown.stop();
+		countdown.stop('game1');
 
 		expect(countdown.store.dispatch).toHaveBeenCalledTimes(1);
+		expect(spy.mock.calls[0][0]).toBe('game1');
 		expect(spy.mock.calls.length).toBe(1);
 	});
 
 	it('start should dispatch an action that updates countdown status and start to decrement countdown if countdown time was set', () => {
-		mockKit.state = new Map({ countdownTime: 300 });
+		mockKit.state = fromJS({ gameState: { game1: { countdownTime: 300 } } });
 		const countdown = new Countdown(mockKit),
 			spy = jest.spyOn(actions, 'startCountdown', 'set');
 
 		expect(countdown.store.getState()).toBe(mockKit.state);
 
 		countdown.waitOneSecondAndDecrementTime = jest.fn();
-		countdown.start();
+		countdown.start('game1');
 
 		expect(countdown.store.dispatch).toHaveBeenCalledTimes(1);
 		expect(spy.mock.calls.length).toBe(1);
+		expect(spy.mock.calls[0][0]).toBe('game1');
 		expect(countdown.waitOneSecondAndDecrementTime.mock.calls.length).toBe(1);
 		spy.mockReset();
 		spy.mockRestore();
@@ -93,7 +112,7 @@ describe('Countdown', () => {
 		expect(countdown.store.getState()).toBe(mockKit.state);
 
 		countdown.decrement = jest.fn();
-		countdown.start();
+		countdown.start('game1');
 
 		expect(countdown.store.dispatch).toHaveBeenCalledTimes(0);
 		expect(spy.mock.calls.length).toBe(0);
@@ -108,10 +127,11 @@ describe('Countdown', () => {
 			spy = jest.spyOn(actions, 'continueCountdown', 'set');
 
 		countdown.waitOneSecondAndDecrementTime = jest.fn();
-		countdown.continue();
+		countdown.continue('game1');
 
 		expect(countdown.store.dispatch).toHaveBeenCalledTimes(1);
 		expect(spy.mock.calls.length).toBe(1);
+		expect(spy.mock.calls[0][0]).toBe('game1');
 		expect(countdown.waitOneSecondAndDecrementTime.mock.calls.length).toBe(1);
 	});
 
@@ -125,45 +145,50 @@ describe('Countdown', () => {
 	});
 
 	it('checkCountdownEnd should return true if countdown time does not exist or is zero', () => {
+		const gameName = 'game1';
+
 		let countdown;
 
-		countdown = getCountdownWithTime(0);
-		expect(countdown.checkCountdownEnd()).toBe(true);
+		countdown = getCountdownWithTime(gameName, 0);
+		expect(countdown.checkCountdownEnd(gameName)).toBe(true);
 
-		countdown = getCountdownWithTime(null);
-		expect(countdown.checkCountdownEnd()).toBe(true);
+		countdown = getCountdownWithTime(gameName, null);
+		expect(countdown.checkCountdownEnd(gameName)).toBe(true);
 
-		countdown = getCountdownWithTime(undefined);
-		expect(countdown.checkCountdownEnd()).toBe(true);
+		countdown = getCountdownWithTime(gameName, undefined);
+		expect(countdown.checkCountdownEnd(gameName)).toBe(true);
 
-		countdown = getCountdownWithTime(1);
-		expect(countdown.checkCountdownEnd()).toBe(false);
+		countdown = getCountdownWithTime(gameName, 1);
+		expect(countdown.checkCountdownEnd(gameName)).toBe(false);
 	});
 
 	it('checkCountdownIsStopped should return true if countdown is stopped', () => {
+		const gameName = 'game1';
+
 		let countdown;
 
-		countdown = getCountdownWithStatusStopped(true);
-		expect(countdown.checkCountdownIsStopped()).toBe(true);
+		countdown = getCountdownWithStatusStopped(gameName, true);
+		expect(countdown.checkCountdownIsStopped(gameName)).toBe(true);
 
-		countdown = getCountdownWithStatusStopped(true);
-		expect(countdown.checkCountdownIsStopped()).toBe(true);
+		countdown = getCountdownWithStatusStopped(gameName, true);
+		expect(countdown.checkCountdownIsStopped(gameName)).toBe(true);
 	});
 
 	it('decrementTime should return true if time was decremented and countdown should be decremented while countdown time is different from 0 in state', () => {
-		const spy = decrementCountdownTimeSpy;
+		const gameName = 'game1',
+			spy = decrementCountdownTimeSpy;
 		let countdown;
 
-		countdown = getCountdownWithTime(10);
-		expect(countdown.decrementTime()).toBe(true);
+		countdown = getCountdownWithTime(gameName, 10);
+		expect(countdown.decrementTime(gameName)).toBe(true);
 		expect(spy.mock.calls.length).toBe(1);
 
-		countdown = getCountdownWithTime(5);
-		expect(countdown.decrementTime()).toBe(true);
+		countdown = getCountdownWithTime(gameName, 5);
+		expect(countdown.decrementTime(gameName)).toBe(true);
 		expect(spy.mock.calls.length).toBe(2);
 
-		countdown = getCountdownWithTime(0);
-		expect(countdown.decrementTime()).toBe(false);
+		countdown = getCountdownWithTime(gameName, 0);
+		expect(countdown.decrementTime(gameName)).toBe(false);
 		expect(spy.mock.calls.length).toBe(2);
 	});
 

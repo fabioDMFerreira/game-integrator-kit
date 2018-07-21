@@ -1,6 +1,6 @@
-export default kit => ({
-	enableCountdown: kit.enableCountdown.bind(kit),
-	enableCatchables: kit.enableCatchables.bind(kit),
+export default (kit, gameName) => ({
+	enableCountdown: kit.enableCountdown.bind(kit, gameName),
+	enableCatchables: kit.enableCatchables.bind(kit, gameName),
 	keyboard: kit.keyboard,
 	endOfGame: kit.endOfGame.bind(kit),
 	setControlsDescription: kit.setControlsDescription.bind(kit),

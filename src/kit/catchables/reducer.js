@@ -4,25 +4,32 @@ import { SET_NUMBER_CATCHABLES, DECREMENT_NUMBER_CATCHABLES, ENABLE_CATCHABLES }
 export default function (state = new Map(), action = {}) {
 	switch (action.type) {
 	case SET_NUMBER_CATCHABLES: {
-		if (action.number && typeof action.number === 'number') {
-			return state.set('numberOfCatchables', action.number);
+		if (action.number && typeof action.number === 'number' && action.gameName && typeof action.gameName === 'string') {
+			return state.setIn(['gameState', action.gameName, 'numberOfCatchables'], action.number);
 		}
-		console.warn('setNumberCatchables first parameter should be a number');
+		console.warn('setNumberCatchables first parameter must be the game name and the second parameter must be a number');
 		return state;
 	}
 	case DECREMENT_NUMBER_CATCHABLES: {
-		const numberOfCatchables = state.get('numberOfCatchables');
-		if (numberOfCatchables === 0) {
-			console.warn('numberOfCatchables is 0 in state');
-		} else if (!numberOfCatchables) {
-			console.warn('numberOfCatchables should be set');
-		} else {
-			return state.set('numberOfCatchables', numberOfCatchables - 1);
+		if (action.gameName && typeof action.gameName === 'string') {
+			const numberOfCatchables = state.getIn(['gameState', action.gameName, 'numberOfCatchables']);
+			if (numberOfCatchables === 0) {
+				console.warn('numberOfCatchables is 0 in state');
+			} else if (!numberOfCatchables) {
+				console.warn('numberOfCatchables should be set');
+			} else {
+				return state.setIn(['gameState', action.gameName, 'numberOfCatchables'], numberOfCatchables - 1);
+			}
 		}
+
 		return state;
 	}
 	case ENABLE_CATCHABLES: {
-		return state.set('catchablesEnabled', true);
+		if (action.gameName && typeof action.gameName === 'string') {
+			return state.setIn(['gameState', action.gameName, 'catchablesEnabled'], true);
+		}
+
+		return state;
 	}
 	default: {
 		return state;

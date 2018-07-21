@@ -7,7 +7,7 @@ import Countdown from './Countdown';
 import './InfoOptions.css';
 
 const InfoOptions = ({
-	openMenu, openControls, numberOfCatchables, countdownEnabled, catchablesEnabled,
+	openMenu, openControls, numberOfCatchables, countdownEnabled, catchablesEnabled, countdownTime,
 }) => (
 	<div id="info-options">
 		<div>
@@ -26,7 +26,7 @@ const InfoOptions = ({
 		{
 			countdownEnabled &&
 				<div className="countdown">
-					<Timer /> <Countdown />
+					<Timer /> <Countdown time={countdownTime} />
 				</div>
 		}
 		{
@@ -45,6 +45,7 @@ InfoOptions.propTypes = {
 	openControls: func,
 	countdownEnabled: bool,
 	catchablesEnabled: bool,
+	countdownTime: number,
 };
 
 InfoOptions.defaultProps = {
@@ -52,6 +53,7 @@ InfoOptions.defaultProps = {
 	numberOfCatchables: 0,
 	countdownEnabled: false,
 	catchablesEnabled: false,
+	countdownTime: 0,
 };
 
 

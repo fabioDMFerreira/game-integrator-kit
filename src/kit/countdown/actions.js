@@ -7,39 +7,45 @@ import {
 	ENABLE_COUNTDOWN,
 } from './constants';
 
-export function startCountdown() {
+export function startCountdown(gameName) {
 	return {
 		type: START_COUNTDOWN,
+		gameName,
 	};
 }
 
-export function stopCountdown() {
+export function stopCountdown(gameName) {
 	return {
 		type: STOP_COUNTDOWN,
+		gameName,
 	};
 }
 
-export function continueCountdown() {
+export function continueCountdown(gameName) {
 	return {
 		type: CONTINUE_COUNTDOWN,
+		gameName,
 	};
 }
 
-export function setCountdownTime(time) {
+export function setCountdownTime(gameName, time) {
 	return {
 		type: SET_COUNTDOWN_TIME,
 		time,
+		gameName,
 	};
 }
 
-export function decrementCountdownTime() {
+export function decrementCountdownTime(gameName) {
 	return {
 		type: DECREMENT_COUNTDOWN_TIME,
+		gameName,
 	};
 }
 
-export function enableCountdown() {
+export function enableCountdown(gameName) {
 	return {
 		type: ENABLE_COUNTDOWN,
+		gameName,
 	};
 }

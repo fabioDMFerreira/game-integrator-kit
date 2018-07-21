@@ -69,14 +69,14 @@ describe('Menu component', () => {
 
 	it('should have finish game feature', () => {
 		const newGame = jest.fn(),
-			finishGame = jest.fn(),
-			menu = shallow(<Menu reload={newGame} finishGame={finishGame} gameLost={false} />),
-			finishGameOption = menu.find('#finish-game');
+			selectGame = jest.fn(),
+			menu = shallow(<Menu reload={newGame} selectGame={selectGame} gameLost={false} />),
+			selectGameOption = menu.find('#select-game');
 
-		expect(finishGameOption).toHaveLength(1);
+		expect(selectGameOption).toHaveLength(1);
 
-		finishGameOption.simulate('click');
+		selectGameOption.simulate('click');
 
-		expect(finishGame).toHaveBeenCalledTimes(1);
+		expect(selectGame).toHaveBeenCalledTimes(1);
 	});
 });

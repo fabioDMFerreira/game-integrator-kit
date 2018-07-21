@@ -64,9 +64,12 @@ export default class Kit {
 		this.games = GamesValidated;
 	}
 
-	finishGame() {
+	pauseGameAndShowGamesList() {
 		this.ui.hideMenu();
+
 		this.game = null;
+		this.gameName = null;
+
 		this.gameStatus.setGameSelected();
 	}
 
@@ -94,20 +97,20 @@ export default class Kit {
 
 	enableCountdown() {
 		this.countdown = new Countdown(this);
-		this.countdown.enable();
+		this.countdown.enable(this.gameName);
 		return {
-			setTime: this.countdown.setTime.bind(this.countdown),
-			stop: this.countdown.stop.bind(this.countdown),
-			continue: this.countdown.stop.bind(this.countdown),
+			setTime: this.countdown.setTime.bind(this.countdown, this.gameName),
+			stop: this.countdown.stop.bind(this.countdown, this.gameName),
+			continue: this.countdown.stop.bind(this.countdown, this.gameName),
 		};
 	}
 
 	enableCatchables() {
 		this.catchables = new Catchables(this);
-		this.catchables.enable();
+		this.catchables.enable(this.gameName);
 		return {
-			set: this.catchables.set.bind(this.catchables),
-			decrease: this.catchables.decrease.bind(this.catchables),
+			set: this.catchables.set.bind(this.catchables, this.gameName),
+			decrease: this.catchables.decrease.bind(this.catchables, this.gameName),
 		};
 	}
 
@@ -131,10 +134,14 @@ export default class Kit {
 	selectGame(gameName) {
 		const [GameName, Game] = this.getGameByName(gameName);
 
-		// add methods of kit into game
-		Game.loadKit(generateGameInterface(this));
 
 		this.game = Game;
+		this.gameName = gameName;
+
+		// add methods of kit into game
+		Game.loadKit(generateGameInterface(this, gameName));
+
+
 		this.gameStatus.setGameSelected(GameName);
 	}
 
@@ -171,8 +178,7 @@ export default class Kit {
 		this.game.startRender();
 
 		if (this.countdown) {
-			this.countdown.setTime(300);
-			this.countdown.start();
+			this.countdown.start(this.gameName);
 		}
 	}
 
@@ -181,7 +187,7 @@ export default class Kit {
 		this.game.stopRender();
 
 		if (this.countdown) {
-			this.countdown.stop();
+			this.countdown.stop(this.gameName);
 		}
 	}
 
@@ -189,7 +195,7 @@ export default class Kit {
 		this.gameStatus.continueGame();
 		this.game.startRender();
 		if (this.countdown) {
-			this.countdown.continue();
+			this.countdown.continue(this.gameName);
 		}
 	}
 
