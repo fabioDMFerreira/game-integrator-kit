@@ -31,7 +31,7 @@ export default class GameStatus {
 
 	/**
  * Set description of controls that must be used in game.
- * @param {class} description - must be a react component or a function
+ * @param {object} description - - Properties must be {string} controls and its values descriptions
  */
 	setControlsDescription(description) {
 		this.store.dispatch(setControlsDescription(description));

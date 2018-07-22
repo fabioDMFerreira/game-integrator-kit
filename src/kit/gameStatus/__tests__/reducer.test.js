@@ -1,4 +1,4 @@
-import { Map } from 'immutable';
+import { Map, fromJS } from 'immutable';
 
 import reducer from '../reducer';
 import * as actions from '../actions';
@@ -66,16 +66,18 @@ describe('GameStatus reducer', () => {
 		expect(actual).toEqual(expected);
 	});
 
-	it('on SET_CONTROLS_DESCRIPTION should update controlsDescription if description is passed', () => {
-		let actual = reducer(undefined, actions.setControlsDescription('lorem')),
+	it('on SET_CONTROLS_DESCRIPTION should update controlsDescription', () => {
+		let actual = reducer(undefined, actions.setControlsDescription({ w: 'lorem' })),
 			expected = new Map({
-				controlsDescription: 'lorem',
+				controlsDescription: {
+					w: 'lorem',
+				},
 			});
 
 		expect(actual).toEqual(expected);
 
 		actual = reducer(undefined, actions.setControlsDescription());
-		expected = new Map({});
+		expected = new Map({ controlsDescription: undefined });
 
 		expect(actual).toEqual(expected);
 	});

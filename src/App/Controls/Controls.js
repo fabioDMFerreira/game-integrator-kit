@@ -1,25 +1,31 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Map } from 'immutable';
-import { element, func } from 'prop-types';
+import { object, func } from 'prop-types';
 
 import { Dialog } from '@material-ui/core';
 
 import './Controls.css';
 
-const Controls = ({ onClose, children }) => (
+const Controls = ({ onClose, controls }) => (
 	<Dialog open onClose={onClose}>
-		{children}
+		<div id="controls-content">
+			<ul>
+				{
+					Object.keys(controls).map((key, index) => <li key={index}>{key} - {controls[key]}</li>)
+				}
+			</ul>
+		</div>
 	</Dialog>
 );
 
 Controls.propTypes = {
-	children: element,
+	controls: object,
 	onClose: func.isRequired,
 };
 
 Controls.defaultProps = {
-	children: <div />,
+	controls: {},
 };
 
 

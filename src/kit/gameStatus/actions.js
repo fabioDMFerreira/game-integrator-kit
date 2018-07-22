@@ -39,6 +39,10 @@ export function gameLost() {
 	};
 }
 
+/**
+ *
+ * @param {Object} description - Properties must be {string} controls and its values descriptions
+ */
 export function setControlsDescription(description) {
 	return {
 		type: SET_CONTROLS_DESCRIPTION,

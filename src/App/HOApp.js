@@ -1,7 +1,7 @@
 import { Map } from 'immutable';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bool, func, string } from 'prop-types';
+import { bool, string , object } from 'prop-types';
 
 import Game from './Game';
 import Menu from './Menu';
@@ -20,7 +20,7 @@ const HOApp = (kit) => {
 			showPopup: bool,
 			showMenu: bool,
 			showControls: bool,
-			controls: func,
+			controls: object,
 			game: string,
 		}
 
@@ -28,7 +28,7 @@ const HOApp = (kit) => {
 			showPopup: false,
 			showControls: false,
 			showMenu: false,
-			controls: () => <div />,
+			controls: undefined,
 			game: '',
 		}
 
@@ -90,9 +90,7 @@ const HOApp = (kit) => {
 						/>}
 					{
 						showControls && !showPopup &&
-						<Controls onClose={this.closeControls}>
-							{controls()}
-						</Controls>
+						<Controls onClose={this.closeControls} controls={controls} />
 					}
 
 					{

@@ -3,5 +3,4 @@ export default (kit, gameName) => ({
 	enableCatchables: kit.enableCatchables.bind(kit, gameName),
 	keyboard: kit.keyboard,
 	endOfGame: kit.endOfGame.bind(kit),
-	setControlsDescription: kit.setControlsDescription.bind(kit),
 });

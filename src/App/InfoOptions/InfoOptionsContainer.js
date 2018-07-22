@@ -9,15 +9,16 @@ function mapStateToProps(state) {
 		countdownEnabled,
 		catchablesEnabled,
 		countdownTime,
-		gameName;
+		controlsDescription;
 
 	if (Map.isMap(state)) {
-		gameName = state.get('game');
+		const gameName = state.get('game');
 		if (gameName) {
 			numberOfCatchables = state.getIn(['gameState', gameName, 'numberOfCatchables']);
 			countdownEnabled = state.getIn(['gameState', gameName, 'countdownEnabled']);
 			catchablesEnabled = state.getIn(['gameState', gameName, 'catchablesEnabled']);
 			countdownTime = state.getIn(['gameState', gameName, 'countdownTime']);
+			controlsDescription = state.get('controlsDescription');
 		}
 	}
 
@@ -26,6 +27,7 @@ function mapStateToProps(state) {
 		countdownEnabled,
 		catchablesEnabled,
 		countdownTime,
+		controlsDescription,
 	};
 }
 

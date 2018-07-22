@@ -141,6 +141,8 @@ export default class Kit {
 		// add methods of kit into game
 		Game.loadKit(generateGameInterface(this, gameName));
 
+		// update controls help accessible through infoOptions component
+		this.setControlsDescription(Game.controls);
 
 		this.gameStatus.setGameSelected(GameName);
 	}
