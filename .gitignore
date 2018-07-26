@@ -1,15 +1,10 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
-#games directory
-/src/games/*
-
-# exception to the rule
-!/src/games/.gitkeep 
-
 # styles
 src/**/*.css
 
 # dependencies
+/src/games/**/node_modules
 /node_modules
 
 # testing
