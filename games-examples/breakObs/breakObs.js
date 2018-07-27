@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import TWEEN from '@tweenjs/tween.js';
+import TWEEN from './js/Tween.js';
 
 import cloudsImage from './imagens/clouds2.jpg';
 import grassImage from './imagens/grasslight-big.jpg';
