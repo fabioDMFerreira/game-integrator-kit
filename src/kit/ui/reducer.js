@@ -8,6 +8,8 @@ import {
 	SHOW_POPUP,
 	HIDE_POPUP,
 	SET_POPUP_CONTENT,
+	SET_POPUP_TITLE,
+	SET_POPUP_STATUS,
 } from './constants';
 
 export default function (state = new Map(), action = {}) {
@@ -32,6 +34,10 @@ export default function (state = new Map(), action = {}) {
 		return state.set('showPopup', false);
 	case SET_POPUP_CONTENT:
 		return state.set('popupContent', action.content);
+	case SET_POPUP_TITLE:
+		return state.set('popupTitle', action.title);
+	case SET_POPUP_STATUS:
+		return state.set('popupStatus', action.status);
 	default:
 		return state;
 	}

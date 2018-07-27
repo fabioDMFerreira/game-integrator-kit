@@ -14,7 +14,7 @@
 </div>
 
 # Overview
-Game Integrator Kit is the tool that allowss skip quickly the environment setup and provides tools to develop 3D animations.
+Game Integrator Kit is a tool that allows skip quickly the environment setup and provides tools to develop 3D animations.
 
 - **Rendering handler.** Provides rendering container. Shows menu on start and stop rendering;
 - **Responsive Interface.** Rendering container size is updated on resizing window;
@@ -65,18 +65,52 @@ Start application server.
 
 ``` > npm start ```
 
+# Testing
+
+Run test script.
+
+``` > npm run-script test ```
+
+## Vscode
+
+Use [jest extension](https://github.com/jest-community/vscode-jest).
 
 # Deployment
 
-Create the application optimized bundle.
+Create the optimized application bundle.
 
 ``` > npm run-script build ```
+
+## Manual
 
 Move bundle to production server and run a static server. For example [local-web-server](https://www.npmjs.com/package/local-web-server).
 
 ``` > cd <application directory> && ws --spa index.html -p 80 ```
 
+## Heroku
 
+Install heroku client and login. 
+
+Move bundle to a different directory and create git repository.
+
+``` > cd <bundle directory> && game init ```
+
+ Create your heroku application and add its repository.
+
+``` > heroku create <application name> ```
+
+Add your files and commit.
+
+```> git add * ```<br />
+```> git commit -a -m "<commit message>"```
+
+Deploy bundle.
+
+``` > git push heroku master```
+
+Access application.
+
+``` > heroku open ```
 
 # Contributing
 Please read CONTRIBUTING.md for details on our code of conduct, and the process for submitting pull requests to us.

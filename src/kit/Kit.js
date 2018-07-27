@@ -82,16 +82,6 @@ export default class Kit {
 		// do not allow focused buttons to be clicked on tapping space or enter
 		this.keyboard.subscribe(32, preventBubble);
 		this.keyboard.subscribe(13, preventBubble);
-
-		// on click escape show menu if game is running
-		this.keyboard.subscribe(27, () => {
-			const state = this.store.getState(),
-				gameStopped = state.get('gameStopped');
-
-			if (!gameStopped) {
-				this.showMenu();
-			}
-		});
 	}
 
 
@@ -137,6 +127,16 @@ export default class Kit {
 
 		this.game = Game;
 		this.gameName = gameName;
+
+		// on click escape show menu if game is running
+		this.keyboard.subscribe(27, () => {
+			const state = this.store.getState(),
+				gameStopped = state.get('gameStopped');
+
+			if (!gameStopped) {
+				this.showMenu();
+			}
+		});
 
 		// add methods of kit into game
 		Game.loadKit(generateGameInterface(this, gameName));

@@ -1,4 +1,4 @@
-import { showMenu, showControls, hideMenu, hideControls, showPopup, hidePopup, setPopupContent } from './actions';
+import { showMenu, showControls, hideMenu, hideControls, showPopup, hidePopup, setPopupContent, setPopupTitle, setPopupStatus } from './actions';
 
 import popupElements from './errorMessages/popupElements';
 
@@ -39,13 +39,23 @@ export default class GameStatus {
 		this.store.dispatch(setPopupContent(content));
 	}
 
+	setPopupTitle(title) {
+		this.store.dispatch(setPopupTitle(title));
+	}
+
+	setPopupStatus(status) {
+		this.store.dispatch(setPopupStatus(status));
+	}
+
 	/**
 	 *
 	 * @param {string} errorMessage
 	 */
 	showError(errorMessage) {
 		if (errorMessage in popupElements) {
-			this.setPopupContent(popupElements[errorMessage]);
+			this.setPopupContent(popupElements[errorMessage].content);
+			this.setPopupTitle(popupElements[errorMessage].title);
+			this.setPopupStatus(popupElements[errorMessage].status);
 		} else {
 			this.setPopupContent(errorMessage);
 		}

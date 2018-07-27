@@ -1,6 +1,6 @@
 import { Map } from 'immutable';
 
-import { showMenu, showControls, hideMenu, hideControls } from '../actions';
+import { showMenu, showControls, hideMenu, hideControls, setPopupTitle, setPopupStatus } from '../actions';
 import reducer from '../reducer';
 
 describe('ui.state', () => {
@@ -45,5 +45,19 @@ describe('ui.state', () => {
 
 	it('should throw an error if state is null', () => {
 		expect(() => reducer(null, showMenu())).toThrow();
+	});
+
+	it('should set popup title', () => {
+		const expected = new Map({ popupTitle: 'hello' }),
+			actual = reducer(new Map(), setPopupTitle('hello'));
+
+		expect(actual).toEqual(expected);
+	});
+
+	it('should set popup status', () => {
+		const expected = new Map({ popupStatus: 'fatal' }),
+			actual = reducer(new Map(), setPopupStatus('fatal'));
+
+		expect(actual).toEqual(expected);
 	});
 });

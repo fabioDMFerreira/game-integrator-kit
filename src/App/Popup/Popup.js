@@ -1,11 +1,29 @@
 import React from 'react';
 import { element, func, oneOfType, string } from 'prop-types';
-import { Dialog, DialogContent } from '@material-ui/core';
+import { Dialog, DialogContent, DialogTitle } from '@material-ui/core';
 
-const Popup = ({ content, onClose }) => (
-	<Dialog open onClose={onClose}>
+const Popup = ({
+	title, status, content, onClose,
+}) => (
+	<Dialog
+		open
+		onClose={onClose}
+		disableBackdropClick={status === 'fatal'}
+		disableEscapeKeyDown={status === 'fatal'}
+	>
+		<DialogTitle>
+			{title}
+		</DialogTitle>
 		<DialogContent>
-			{content}
+			{
+				(() => {
+					if (content instanceof Function) {
+						return content();
+					}
+
+					return content;
+				})()
+			}
 		</DialogContent>
 	</Dialog >
 );
@@ -13,10 +31,14 @@ const Popup = ({ content, onClose }) => (
 Popup.propTypes = {
 	content: oneOfType([element, func, string]),
 	onClose: func.isRequired,
+	title: string,
+	status: string,
 };
 
 Popup.defaultProps = {
 	content: <div />,
+	status: '',
+	title: '',
 };
 
 export default Popup;

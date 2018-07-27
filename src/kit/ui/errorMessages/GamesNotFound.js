@@ -1,16 +1,17 @@
 import React from 'react';
-import { DialogTitle, DialogContent, DialogContentText } from '@material-ui/core';
+import { DialogContentText } from '@material-ui/core';
 
 
-export default () => (
-	<div>
-		<DialogTitle>
-			{'Games not Found'}
-		</DialogTitle>
-		<DialogContent>
-			<DialogContentText>
-				{'Please add your games directories into "/src/games".'}
-			</DialogContentText>
-		</DialogContent>
-	</div>
-);
+export const status = 'fatal',
+	title = 'Games Not Found',
+	content = () => (
+		<DialogContentText>
+			{'Please add your games directories into "/src/games".'}
+		</DialogContentText>
+	);
+
+export default {
+	status,
+	title,
+	content,
+};

@@ -6,6 +6,8 @@ import {
 	SHOW_POPUP,
 	HIDE_POPUP,
 	SET_POPUP_CONTENT,
+	SET_POPUP_TITLE,
+	SET_POPUP_STATUS,
 } from './constants';
 
 export function showMenu() {
@@ -48,5 +50,19 @@ export function setPopupContent(content) {
 	return {
 		type: SET_POPUP_CONTENT,
 		content,
+	};
+}
+
+export function setPopupTitle(title) {
+	return {
+		type: SET_POPUP_TITLE,
+		title,
+	};
+}
+
+export function setPopupStatus(status) {
+	return {
+		type: SET_POPUP_STATUS,
+		status,
 	};
 }
