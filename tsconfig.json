@@ -20,7 +20,8 @@
     "jsx": "preserve"
   },
   "include": [
-    "src", "games-examples/graveball"
+    "src",
+    "games-examples/graveball"
   ],
   "extends": "./tsconfig.paths.json"
 }
