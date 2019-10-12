@@ -1,5 +1,5 @@
 export default class World {
-	constructor(keyboardStatus, anguloCamera, objMovable, keyboard, endOfGame, objCatchable) {
+	constructor(keyboardStatus, anguloCamera, objMovable, keyboard, gameHasEnded, objCatchable) {
 		this.app = 'GraveBall :)';
 		this.gravity = 0.5;
 
@@ -7,7 +7,7 @@ export default class World {
 		this.anguloCamera = anguloCamera;
 		this.objMovable = objMovable;
 		this.keyboard = keyboard;
-		this.endOfGame = endOfGame;
+		this.gameHasEnded = gameHasEnded;
 		this.objCatchable = objCatchable;
 
 		this.orderRotation = 'XYZ';
@@ -59,9 +59,9 @@ export default class World {
 		}
 	}
 
-	fimJogo() {
+	endGame() {
 		if (this.Obj.position.y < -100) {
-			this.endOfGame();
+			this.gameHasEnded();
 		}
 	}
 
@@ -112,7 +112,7 @@ export default class World {
 
 		this.updateVelocity();
 
-		this.fimJogo();
+		this.endGame();
 
 		return 1;
 	}

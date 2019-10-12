@@ -14,50 +14,60 @@ import { executeFunction, parseArray } from './utils';
 import GameStatus from './gameStatus';
 
 export default class Kit {
+	store: any;
+	keyboard: any;
+	gameStatus: any;
+	ui: any;
+	games: any;
+	catchables?: any;
+	countdown?: any;
+	game: any;
+	gameName?: string;
+
 	constructor() {
 		if (process.env.NODE_ENV === 'development') {
-			this.store = createStore(reducer, devToolsEnhancer());
+			this.store = createStore(reducer, devToolsEnhancer({}));
 		} else {
 			this.store = createStore(reducer);
 		}
-		this.keyboard = new Keyboard(this);
+		this.keyboard = new Keyboard();
 		this.gameStatus = new GameStatus(this);
 		this.ui = new Ui(this);
 
 		this.init();
 	}
 
-	validateGame(Game) {
+	validateGame(game: any) {
 		const mustHaveMethods = ['renderOn', 'startRender', 'setSize', 'loadKit', 'stopRender'];
 
-		if (!Game) {
+		if (!game) {
 			return {
 				errorMessage: '"index.js" file must expose an object with methods: \'renderOn\', \'startRender\', \'setSize\', \'loadKit\'',
 			};
 		}
 
 		for (let i = 0; i < mustHaveMethods.length; i++) {
-			if (!(mustHaveMethods[i] in Game)) {
+			if (!(mustHaveMethods[i] in game)) {
 				return {
 					errorMessage: `${mustHaveMethods[i]} must be exposed in index.js of your game directory`,
 				};
-			} else if (!(Game[mustHaveMethods[i]] instanceof Function)) {
+			} else if (!(game[mustHaveMethods[i]] instanceof Function)) {
 				return {
 					errorMessage: `${mustHaveMethods[i]} must be a function`,
 				};
 			}
 		}
 
-		return Game;
+		return game;
 	}
 
-	setGames(Games) {
-		if (!Games || typeof Games !== 'object' || !Object.keys(Games).length) {
+	setGames(games: any) {
+		if (!games || typeof games !== 'object' || !Object.keys(games).length) {
 			return this.ui.showError(GAMES_NOT_FOUND);
 		}
 
-		const GamesValidated = Object.keys(Games).reduce((gamesList, gameName) => {
-			gamesList[gameName] = this.validateGame(Games[gameName]);
+		const GamesValidated = Object.keys(games).reduce((gamesList: any, gameName) => {
+			gamesList[gameName] = this.validateGame(games[gameName]);
 			return gamesList;
 		}, {});
 
@@ -68,13 +78,13 @@ export default class Kit {
 		this.ui.hideMenu();
 
 		this.game = null;
-		this.gameName = null;
+		this.gameName = "";
 
 		this.gameStatus.setGameSelected();
 	}
 
 	init() {
-		function preventBubble(e) {
+		function preventBubble(e: any) {
 			e.preventDefault();
 			e.stopPropagation();
 		}
@@ -121,7 +131,7 @@ export default class Kit {
 	}
 
 
-	selectGame(gameName) {
+	selectGame(gameName: string) {
 		const [GameName, Game] = this.getGameByName(gameName);
 
 
@@ -152,21 +162,21 @@ export default class Kit {
 	 * @param {string} game
 	 * @returns {(string|class)[]} game - [0] Name of the game and [1] Class of the game
 	 */
-	getGameByName(game) {
+	getGameByName(game: any) {
 		const descriptionOfGame = game || Object.keys(this.games)[0];
 
 		return [descriptionOfGame, this.games[descriptionOfGame]];
 	}
 
-	setControlsDescription(description) {
+	setControlsDescription(description: string) {
 		this.gameStatus.setControlsDescription(description);
 	}
 
-	endOfGame(result) {
+	endOfGame(result: boolean) {
 		return result ? this.won() : this.lost();
 	}
 
-	load(element) {
+	load(element: any) {
 		if (this.game) {
 			this.game.renderOn(element);
 			this.start();
@@ -248,7 +258,7 @@ export default class Kit {
 		this.showMenu();
 	}
 
-	setGameContainerSize(width, height) {
+	setGameContainerSize(width: any, height: any) {
 		if (this.game) {
 			this.game.setSize(width, height);
 		} else {
@@ -265,6 +275,8 @@ export default class Kit {
 		this.ui.hidePopup();
 		this.continue();
 	}
-}
 
-Kit.prototype.reload = () => window.location.reload();
+	reload() {
+		window.location.reload();
+	}
+};

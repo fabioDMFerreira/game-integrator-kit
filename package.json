@@ -5,10 +5,7 @@
   "dependencies": {
     "@material-ui/core": "1.0.0",
     "@material-ui/icons": "1.0.0",
-    "enzyme": "3.3.0",
-    "enzyme-adapter-react-16": "1.1.1",
     "immutable": "3.8.2",
-    "jest-enzyme": "6.0.2",
     "prop-types": "15.6.1",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
@@ -17,7 +14,9 @@
     "reduce-reducers": "0.3.0",
     "redux": "4.0.0",
     "redux-devtools-extension": "2.13.2",
-    "sass-flex-mixin": "1.0.3"
+    "sass-flex-mixin": "1.0.3",
+    "three": "0.109.0",
+    "typescript": "3.6.4"
   },
   "scripts": {
     "build-css": "node-sass-chokidar -o src/ --include-path ./src --include-path ./node_modules src/",
@@ -31,23 +30,34 @@
     "cover": "npm test -- --coverage"
   },
   "devDependencies": {
+    "@babel/core": "7.3.3",
+    "@babel/plugin-proposal-class-properties": "7.3.3",
+    "@babel/plugin-proposal-object-rest-spread": "7.3.2",
+    "@babel/plugin-transform-runtime": "7.2.0",
+    "@babel/preset-env": "7.3.1",
+    "@babel/preset-react": "7.0.0",
     "@types/jest": "22.2.3",
-    "babel-core": "6.26.3",
-    "babel-eslint": "8.2.6",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "9.0.0",
+    "babel-loader": "8.0.5",
     "babel-plugin-transform-class-properties": "6.24.1",
     "babel-preset-env": "1.7.0",
     "babel-preset-react": "6.24.1",
+    "babel-preset-typescript": "7.0.0-alpha.19",
     "babel-register": "6.26.0",
-    "eslint": "4.19.1",
+    "enzyme": "3.3.0",
+    "enzyme-adapter-react-16": "1.1.1",
+    "eslint": "5.12.0",
     "eslint-config-airbnb": "16.1.0",
     "eslint-plugin-css-modules": "2.7.5",
     "eslint-plugin-import": "2.12.0",
     "eslint-plugin-jest": "21.15.1",
     "eslint-plugin-jsx-a11y": "6.0.3",
     "eslint-plugin-react": "7.8.2",
+    "jest-enzyme": "6.0.2",
     "node-sass-chokidar": "1.3.0",
     "npm-run-all": "4.1.3",
-    "react-scripts": "1.1.4",
+    "react-scripts": "2.1.5",
     "react-test-renderer": "16.4.0"
   },
   "jest": {
@@ -55,5 +65,11 @@
       "**/src/**.{js}",
       "!**/game/graveball/**"
     ]
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

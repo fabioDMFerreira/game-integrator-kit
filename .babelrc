@@ -1,9 +1,13 @@
 {
-  "plugins": ["transform-class-properties"],
   "presets": [
-    "react",
-    "env"
+    "@babel/preset-react",
+    "@babel/preset-env",
+    "typescript"
   ],
   "sourceMaps": "inline",
-  "retainLines": true
+  "retainLines": true,
+  "plugins": [
+    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-proposal-class-properties"
+  ]
 }
