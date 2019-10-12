@@ -1,7 +1,8 @@
 # Game Integrator Kit
 
+Game Integrator Kit provides basic features to quickly start developing 3D animations and games with Webgl.
+
 <div align="center">
-	<h3>Provide tools to develop WebGL games and animations.</h3>
 	<p>
 		<img
 			width="300"
@@ -12,8 +13,7 @@
 	</strong>
 </div>
 
-# Overview
-Game Integrator Kit provides basic features to quickly start developing 3D animations with Webgl.
+# Features
 
 - **Rendering handler.** Provides rendering container. Shows menu on start and stop rendering;
 - **Responsive Interface.** Rendering container size is updated on resizing window;
