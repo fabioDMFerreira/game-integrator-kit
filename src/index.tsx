@@ -7,7 +7,7 @@ import HOApp from './App';
 import registerServiceWorker from './registerServiceWorker';
 import Kit from './Kit';
 import getGames from './getGames';
-import Game from './Game';
+import Game from './Kit/Game';
 
 const Games: Game[] = getGames();
 

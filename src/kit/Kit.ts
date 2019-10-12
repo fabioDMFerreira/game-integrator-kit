@@ -12,6 +12,7 @@ import { GAMES_NOT_FOUND } from './ui/errorMessages/constants';
 
 import { executeFunction, parseArray } from './utils';
 import GameStatus from './gameStatus';
+import Game from './Game';
 
 export default class Kit {
 	store: any;
@@ -21,7 +22,7 @@ export default class Kit {
 	games: any;
 	catchables?: any;
 	countdown?: any;
-	game: any;
+	game?: Game;
 	gameName?: string;
 
 	constructor() {
@@ -77,7 +78,7 @@ export default class Kit {
 	pauseGameAndShowGamesList() {
 		this.ui.hideMenu();
 
-		this.game = null;
+		this.game = undefined;
 		this.gameName = "";
 
 		this.gameStatus.setGameSelected();
@@ -186,6 +187,10 @@ export default class Kit {
 	}
 
 	start() {
+		if (!this.game) {
+			return;
+		}
+
 		this.gameStatus.startGame();
 		this.game.startRender();
 
@@ -195,6 +200,10 @@ export default class Kit {
 	}
 
 	stop() {
+		if (!this.game) {
+			return;
+		}
+
 		this.gameStatus.stopGame();
 		this.game.stopRender();
 
@@ -204,6 +213,10 @@ export default class Kit {
 	}
 
 	continue() {
+		if (!this.game) {
+			return;
+		}
+
 		this.gameStatus.continueGame();
 		this.game.startRender();
 		if (this.countdown) {
