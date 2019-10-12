@@ -1,11 +1,10 @@
 # Game Integrator Kit
 
 <div align="center">
-	<h3>Host application of WebGL games and animations</h3>
+	<h3>Provide tools to develop WebGL games and animations.</h3>
 	<p>
 		<img
 			width="300"
-			alt="The Lounge"
 			src="images/screenshot.png">
 	</p>
 	<strong>
@@ -14,22 +13,22 @@
 </div>
 
 # Overview
-Game Integrator Kit is a tool that allows skip quickly the environment setup and provides tools to develop 3D animations.
+Game Integrator Kit provides basic features to quickly start developing 3D animations with Webgl.
 
 - **Rendering handler.** Provides rendering container. Shows menu on start and stop rendering;
 - **Responsive Interface.** Rendering container size is updated on resizing window;
-- **Support parallel development of multiple animations.** It allows have more than one game/animation in same codebase and swap easily between them in the same browser session. 
-- **Modular** Games are nearly independent of the kit. Kit only needs an interface to access a set of methods. Games have their own dependencies and their own repository. This allows receiving game kit updates without conflicting with existing game code.
+- **Support parallel development of multiple animations.** It allows having more than one game/animation in same codebase and swap easily between them without running additional commands.
+- **Modular** Games is almost independent of the kit. It only needs an interface to access a set of methods. Games have their own dependencies and their own repository. This allows receiving game kit updates without having conflicts with existing game code.
 - **Game modules.** Provides features that are tipically used in games.
-	- **Countdown.** Force gamers to complete game goals. Shows lose screen if countdown ends.
-	- **Catchables.** Set goal of catch every objects existing in the world. Shows win screen if all objects are collected.
+	- **Countdown.** Force gamers to complete game goals in time. Shows lose screen if countdown ends.
+	- **Catchables.** Set the goal of catching existant objects. Shows win screen if all objects are collected.
 - **WebGL library independent.** Animation built in any WebGL library can use the kit.
 	- **Threejs.** Kit provides a class with methods and animation elements that helps integration.
 - **Es6, eslint configuration, Sass, build script and jest/enzyme setup**
 
 # Tech/framework used
 
-- React/redux flow;
+- React/Redux;
 - Material UI components;
 - State is saved in an immutable object;
 - Enzyme is already setup;
@@ -48,7 +47,7 @@ Install dependencies
 
 ``` > npm install ```
 
-Add games to `src/games` directory. Create an `index.js`, which musst export kit required methods.
+Add games to `src/games` directory. Create an `index.js`, which must export kit required methods.
 
 ```
 export default {
@@ -89,7 +88,7 @@ Move bundle to production server and run a static server. For example [local-web
 
 ## Heroku
 
-Install heroku client and login. 
+Install heroku client and login.
 
 Move bundle to a different directory and create git repository.
 
