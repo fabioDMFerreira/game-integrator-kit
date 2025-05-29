@@ -1,4 +1,4 @@
-import Kit from '.';
+import Kit from './Kit';
 
 interface Controls {
   [key: string]: string

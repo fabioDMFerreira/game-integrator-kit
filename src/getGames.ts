@@ -1,28 +1,20 @@
-function capitalizeFirstLetter(str: string) {
-	return str[0].toUpperCase() + str.slice(1);
-}
+import Game from './Kit/Game';
 
-export function loadGamesFromContext(results: any) {
-	const keys = results.keys(),
-		// extract game folder name
-		gamesNames = keys.map((gamePath: string) => {
-			const matchPath = gamePath.match(/^.\/(\w*)\/index.js$/);
-			const nameOfGame = matchPath ? matchPath[1] : "";
+const games: { [key: string]: Game } = {},
+	gamesContext = require.context('./games', true, /index\.js$/);
 
-			return capitalizeFirstLetter(nameOfGame);
-		}),
-		// Import index javascript file from the games
-		dirContent = keys.map(results),
-		// Assign file game to its description in games list
-		games = dirContent.reduce((gamesList: any, value: any, index: number) => ({
-			...gamesList,
-			[gamesNames[index]]: value.default,
-		}), {});
+gamesContext.keys().forEach((key) => {
+	const gameKey = key.split('/')[1];
+	games[gameKey] = gamesContext(key).default;
+});
 
+const getGames = () => {
+	if (!Object.keys(games).length) {
+		throw new Error('No games found');
+	}
 
-	return games;
-}
+	return Object.values(games);
+};
 
-export default () =>
-	loadGamesFromContext(require.context('./games', true, /^.\/\w*\/index.js$/));
+export default getGames;
 
