@@ -1,25 +1,27 @@
 import { Map, fromJS } from 'immutable';
 
 import reducer from '../reducer.js';
-import { startCountdown, stopCountdown, continueCountdown, setCountdownTime, decrementCountdownTime, enableCountdown } from '../actions';
+import {
+	startCountdown, stopCountdown, continueCountdown, setCountdownTime, decrementCountdownTime, enableCountdown
+} from '../actions';
 
 describe('Countdown reducer', () => {
 	it('setIn should update nested objects', () => {
 		const state = fromJS({
 				gameState: {
 					game1: {
-						catchablesEnabled: true,
-					},
-				},
+						catchablesEnabled: true
+					}
+				}
 			}),
 			actual = state.setIn(['gameState', 'game1', 'time'], 100),
 			expected = fromJS({
 				gameState: {
 					game1: {
 						catchablesEnabled: true,
-						time: 100,
-					},
-				},
+						time: 100
+					}
+				}
 			});
 
 		expect(actual).toEqual(expected);
@@ -46,8 +48,8 @@ describe('Countdown reducer', () => {
 		actual = reducer(undefined, startCountdown('game1'));
 		expected = fromJS({
 			gameState: {
-				game1: { countdownStarted: true, countdownStopped: false },
-			},
+				game1: { countdownStarted: true, countdownStopped: false }
+			}
 		});
 
 		expect(actual).toEqual(expected);

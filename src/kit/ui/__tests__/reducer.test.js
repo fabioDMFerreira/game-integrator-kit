@@ -1,6 +1,8 @@
 import { Map } from 'immutable';
 
-import { showMenu, showControls, hideMenu, hideControls, setPopupTitle, setPopupStatus } from '../actions';
+import {
+	showMenu, showControls, hideMenu, hideControls, setPopupTitle, setPopupStatus
+} from '../actions';
 import reducer from '../reducer';
 
 describe('ui.state', () => {

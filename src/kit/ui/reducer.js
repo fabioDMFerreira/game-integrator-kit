@@ -9,10 +9,10 @@ import {
 	HIDE_POPUP,
 	SET_POPUP_CONTENT,
 	SET_POPUP_TITLE,
-	SET_POPUP_STATUS,
+	SET_POPUP_STATUS
 } from './constants';
 
-export default function (state = new Map(), action = {}) {
+export default function(state = new Map(), action = {}) {
 	if (state === null) {
 		throw new Error('state should not be null');
 	} else if (!action.type) {

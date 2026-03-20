@@ -4,27 +4,27 @@ import {
 	CONTINUE_COUNTDOWN,
 	SET_COUNTDOWN_TIME,
 	DECREMENT_COUNTDOWN_TIME,
-	ENABLE_COUNTDOWN,
+	ENABLE_COUNTDOWN
 } from './constants';
 
 export function startCountdown(gameName) {
 	return {
 		type: START_COUNTDOWN,
-		gameName,
+		gameName
 	};
 }
 
 export function stopCountdown(gameName) {
 	return {
 		type: STOP_COUNTDOWN,
-		gameName,
+		gameName
 	};
 }
 
 export function continueCountdown(gameName) {
 	return {
 		type: CONTINUE_COUNTDOWN,
-		gameName,
+		gameName
 	};
 }
 
@@ -32,20 +32,20 @@ export function setCountdownTime(gameName, time) {
 	return {
 		type: SET_COUNTDOWN_TIME,
 		time,
-		gameName,
+		gameName
 	};
 }
 
 export function decrementCountdownTime(gameName) {
 	return {
 		type: DECREMENT_COUNTDOWN_TIME,
-		gameName,
+		gameName
 	};
 }
 
 export function enableCountdown(gameName) {
 	return {
 		type: ENABLE_COUNTDOWN,
-		gameName,
+		gameName
 	};
 }

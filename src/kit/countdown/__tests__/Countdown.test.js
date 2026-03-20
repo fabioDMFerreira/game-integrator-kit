@@ -8,7 +8,7 @@ class MockKit {
 		this.state = new Map();
 
 		this.store = {
-			dispatch: jest.fn(),
+			dispatch: jest.fn()
 		};
 
 		this.store.getState = function getState() {
@@ -25,8 +25,8 @@ let mockKit,
 function getCountdown(gameName, data) {
 	mockKit.state = fromJS({
 		gameState: {
-			[gameName]: data,
-		},
+			[gameName]: data
+		}
 	});
 	return new Countdown(mockKit);
 }
@@ -35,9 +35,9 @@ function getCountdownWithTime(gameName, countdownTime) {
 	mockKit.state = fromJS({
 		gameState: {
 			[gameName]: {
-				countdownTime,
-			},
-		},
+				countdownTime
+			}
+		}
 	});
 	return new Countdown(mockKit);
 }
@@ -47,9 +47,9 @@ function getCountdownWithStatusStopped(gameName, countdownStopped) {
 	mockKit.state = fromJS({
 		gameState: {
 			[gameName]: {
-				countdownStopped,
-			},
-		},
+				countdownStopped
+			}
+		}
 	});
 	return new Countdown(mockKit);
 }

@@ -1,4 +1,6 @@
-import { startGame, stopGame, continueGame, gameWon, gameLost, setControlsDescription, setGameSelected } from './actions';
+import {
+	startGame, stopGame, continueGame, gameWon, gameLost, setControlsDescription, setGameSelected
+} from './actions';
 
 export default class GameStatus {
 	constructor(Kit) {

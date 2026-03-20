@@ -1,4 +1,6 @@
-import { startCountdown, stopCountdown, continueCountdown, setCountdownTime, decrementCountdownTime, enableCountdown } from './actions';
+import {
+	startCountdown, stopCountdown, continueCountdown, setCountdownTime, decrementCountdownTime, enableCountdown
+} from './actions';
 
 export default class Countdown {
 	constructor(Kit) {

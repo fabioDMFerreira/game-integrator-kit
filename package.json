@@ -32,12 +32,14 @@
     "cover": "npm test -- --coverage"
   },
   "devDependencies": {
-    "@babel/core": "7.3.3",
-    "@babel/plugin-proposal-class-properties": "7.3.3",
+    "@babel/core": "7.27.3",
+    "@babel/eslint-parser": "7.27.1",
+    "@babel/plugin-proposal-class-properties": "7.18.6",
     "@babel/plugin-proposal-object-rest-spread": "7.3.2",
     "@babel/plugin-transform-runtime": "7.2.0",
-    "@babel/preset-env": "7.3.1",
-    "@babel/preset-react": "7.0.0",
+    "@babel/preset-env": "7.27.2",
+    "@babel/preset-react": "7.27.1",
+    "@types/enzyme": "3.10.19",
     "@types/jest": "^27.5.2",
     "@types/react": "^17.0.65",
     "@types/react-dom": "^17.0.20",

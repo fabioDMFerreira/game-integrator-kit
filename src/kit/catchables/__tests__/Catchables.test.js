@@ -7,8 +7,8 @@ describe('Catchables', () => {
 	beforeEach(() => {
 		mockKit = {
 			store: {
-				dispatch: jest.fn(),
-			},
+				dispatch: jest.fn()
+			}
 		};
 	});
 

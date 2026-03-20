@@ -5,37 +5,37 @@ import {
 	GAME_WON,
 	GAME_LOST,
 	SET_CONTROLS_DESCRIPTION,
-	SET_GAME_SELECTED,
+	SET_GAME_SELECTED
 } from './constants';
 
 
 export function startGame() {
 	return {
-		type: START_GAME,
+		type: START_GAME
 	};
 }
 
 export function stopGame() {
 	return {
-		type: STOP_GAME,
+		type: STOP_GAME
 	};
 }
 
 export function continueGame() {
 	return {
-		type: CONTINUE_GAME,
+		type: CONTINUE_GAME
 	};
 }
 
 export function gameWon() {
 	return {
-		type: GAME_WON,
+		type: GAME_WON
 	};
 }
 
 export function gameLost() {
 	return {
-		type: GAME_LOST,
+		type: GAME_LOST
 	};
 }
 
@@ -46,13 +46,13 @@ export function gameLost() {
 export function setControlsDescription(description) {
 	return {
 		type: SET_CONTROLS_DESCRIPTION,
-		description,
+		description
 	};
 }
 
 export function setGameSelected(name) {
 	return {
 		type: SET_GAME_SELECTED,
-		name,
+		name
 	};
 }
