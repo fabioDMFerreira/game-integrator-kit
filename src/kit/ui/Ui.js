@@ -1,4 +1,6 @@
-import { showMenu, showControls, hideMenu, hideControls, showPopup, hidePopup, setPopupContent, setPopupTitle, setPopupStatus } from './actions';
+import {
+	showMenu, showControls, hideMenu, hideControls, showPopup, hidePopup, setPopupContent, setPopupTitle, setPopupStatus
+} from './actions';
 
 import popupElements from './errorMessages/popupElements';
 

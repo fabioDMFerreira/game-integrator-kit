@@ -1,8 +1,10 @@
 import { Map } from 'immutable';
 
-import { START_COUNTDOWN, STOP_COUNTDOWN, SET_COUNTDOWN_TIME, CONTINUE_COUNTDOWN, DECREMENT_COUNTDOWN_TIME, ENABLE_COUNTDOWN } from './constants';
+import {
+	START_COUNTDOWN, STOP_COUNTDOWN, SET_COUNTDOWN_TIME, CONTINUE_COUNTDOWN, DECREMENT_COUNTDOWN_TIME, ENABLE_COUNTDOWN
+} from './constants';
 
-export default function (state = new Map(), action) {
+export default function(state = new Map(), action) {
 	if (!action || !action.type) {
 		return state;
 	}
@@ -12,7 +14,7 @@ export default function (state = new Map(), action) {
 		if (action.gameName && typeof action.gameName === 'string') {
 			return state.mergeIn(['gameState', action.gameName], {
 				countdownStarted: true,
-				countdownStopped: false,
+				countdownStopped: false
 			});
 		}
 		return state;

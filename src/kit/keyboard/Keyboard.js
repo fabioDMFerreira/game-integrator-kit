@@ -18,7 +18,7 @@ export default class Keyboard {
 		document.addEventListener('keyup', this.onKeyUp.bind(this), false);
 
 		// deny access to context menu
-		document.oncontextmenu = function () {
+		document.oncontextmenu = function() {
 			return false;
 		};
 	}
@@ -39,7 +39,7 @@ export default class Keyboard {
 		const keyPressed = event.keyCode;
 
 		if (!this.keysPressed[keyPressed] && this.subscribers[keyPressed]) {
-			this.subscribers[keyPressed].forEach(callback => callback(event));
+			this.subscribers[keyPressed].forEach((callback) => callback(event));
 		}
 
 		this.keysPressed[keyPressed] = 'pressed';

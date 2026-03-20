@@ -7,7 +7,7 @@ import {
 	GAME_WON,
 	GAME_LOST,
 	SET_CONTROLS_DESCRIPTION,
-	SET_GAME_SELECTED,
+	SET_GAME_SELECTED
 } from './constants';
 
 export default (state = new Map(), action) => {
@@ -21,25 +21,25 @@ export default (state = new Map(), action) => {
 			gameStarted: true,
 			gameStopped: false,
 			gameWon: false,
-			gameLost: false,
+			gameLost: false
 		});
 	case STOP_GAME:
 		return state.merge({
-			gameStopped: true,
+			gameStopped: true
 		});
 	case CONTINUE_GAME:
 		return state.merge({
-			gameStopped: false,
+			gameStopped: false
 		});
 	case GAME_LOST:
 		return state.merge({
 			gameLost: true,
-			gameWon: false,
+			gameWon: false
 		});
 	case GAME_WON:
 		return state.merge({
 			gameWon: true,
-			gameLost: false,
+			gameLost: false
 		});
 	case SET_CONTROLS_DESCRIPTION:
 		if (!action.description || action.description instanceof Object) {

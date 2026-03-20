@@ -1,7 +1,7 @@
 import { Map } from 'immutable';
 import { SET_NUMBER_CATCHABLES, DECREMENT_NUMBER_CATCHABLES, ENABLE_CATCHABLES } from './constants';
 
-export default function (state = new Map(), action = {}) {
+export default function(state = new Map(), action = {}) {
 	switch (action.type) {
 	case SET_NUMBER_CATCHABLES: {
 		if (action.number && typeof action.number === 'number' && action.gameName && typeof action.gameName === 'string') {

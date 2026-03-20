@@ -7,62 +7,62 @@ import {
 	HIDE_POPUP,
 	SET_POPUP_CONTENT,
 	SET_POPUP_TITLE,
-	SET_POPUP_STATUS,
+	SET_POPUP_STATUS
 } from './constants';
 
 export function showMenu() {
 	return {
-		type: SHOW_MENU,
+		type: SHOW_MENU
 	};
 }
 
 export function showControls() {
 	return {
-		type: SHOW_CONTROLS,
+		type: SHOW_CONTROLS
 	};
 }
 
 export function hideMenu() {
 	return {
-		type: HIDE_MENU,
+		type: HIDE_MENU
 	};
 }
 
 export function hideControls() {
 	return {
-		type: HIDE_CONTROLS,
+		type: HIDE_CONTROLS
 	};
 }
 
 export function showPopup() {
 	return {
-		type: SHOW_POPUP,
+		type: SHOW_POPUP
 	};
 }
 
 export function hidePopup() {
 	return {
-		type: HIDE_POPUP,
+		type: HIDE_POPUP
 	};
 }
 
 export function setPopupContent(content) {
 	return {
 		type: SET_POPUP_CONTENT,
-		content,
+		content
 	};
 }
 
 export function setPopupTitle(title) {
 	return {
 		type: SET_POPUP_TITLE,
-		title,
+		title
 	};
 }
 
 export function setPopupStatus(status) {
 	return {
 		type: SET_POPUP_STATUS,
-		status,
+		status
 	};
 }

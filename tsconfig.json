@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -17,11 +13,14 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "preserve"
+    "jsx": "react-jsx",
+    "baseUrl": "src",
+    "paths": {
+      "*": ["*"],
+      "@app/*": ["App/*"],
+      "@components/*": ["components/*"]
+    }
   },
-  "include": [
-    "src",
-    "games-examples/graveball"
-  ],
+  "include": ["src", "games-examples/graveball"],
   "extends": "./tsconfig.paths.json"
 }

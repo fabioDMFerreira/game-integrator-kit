@@ -4,20 +4,20 @@ export function setNumberCatchables(gameName, number) {
 	return {
 		type: SET_NUMBER_CATCHABLES,
 		number,
-		gameName,
+		gameName
 	};
 }
 
 export function decrementNumberCatchables(gameName) {
 	return {
 		type: DECREMENT_NUMBER_CATCHABLES,
-		gameName,
+		gameName
 	};
 }
 
 export function enableCatchables(gameName) {
 	return {
 		type: ENABLE_CATCHABLES,
-		gameName,
+		gameName
 	};
 }

@@ -9,7 +9,7 @@ const App = reduceReducers(
 	gameStatus,
 	countdown,
 	catchables,
-	ui,
+	ui
 );
 
 export default App;

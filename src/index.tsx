@@ -9,11 +9,11 @@ import Kit from './Kit';
 import getGames from './getGames';
 import Game from './Kit/Game';
 
-const Games: Game[] = getGames(),
+const games: Game[] = getGames(),
 	kit = new Kit(),
 	App = HOApp(kit);
 
-kit.setGames(Games);
+kit.setGames(games);
 
 ReactDOM.render(
 	<Provider

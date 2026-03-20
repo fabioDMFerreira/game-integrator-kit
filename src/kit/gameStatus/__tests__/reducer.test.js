@@ -22,7 +22,7 @@ describe('GameStatus reducer', () => {
 				gameStarted: true,
 				gameStopped: false,
 				gameWon: false,
-				gameLost: false,
+				gameLost: false
 			});
 
 		expect(actual).toEqual(expected);
@@ -31,7 +31,7 @@ describe('GameStatus reducer', () => {
 	it('on STOP_GAME should update gameStopped', () => {
 		const actual = reducer(undefined, actions.stopGame()),
 			expected = new Map({
-				gameStopped: true,
+				gameStopped: true
 			});
 
 		expect(actual).toEqual(expected);
@@ -40,7 +40,7 @@ describe('GameStatus reducer', () => {
 	it('on CONTINUE_GAME should update gameStopped', () => {
 		const actual = reducer(undefined, actions.continueGame()),
 			expected = new Map({
-				gameStopped: false,
+				gameStopped: false
 			});
 
 		expect(actual).toEqual(expected);
@@ -50,7 +50,7 @@ describe('GameStatus reducer', () => {
 		const actual = reducer(undefined, actions.gameLost()),
 			expected = new Map({
 				gameLost: true,
-				gameWon: false,
+				gameWon: false
 			});
 
 		expect(actual).toEqual(expected);
@@ -60,7 +60,7 @@ describe('GameStatus reducer', () => {
 		const actual = reducer(undefined, actions.gameWon()),
 			expected = new Map({
 				gameWon: true,
-				gameLost: false,
+				gameLost: false
 			});
 
 		expect(actual).toEqual(expected);
@@ -70,8 +70,8 @@ describe('GameStatus reducer', () => {
 		let actual = reducer(undefined, actions.setControlsDescription({ w: 'lorem' })),
 			expected = new Map({
 				controlsDescription: {
-					w: 'lorem',
-				},
+					w: 'lorem'
+				}
 			});
 
 		expect(actual).toEqual(expected);
@@ -85,7 +85,7 @@ describe('GameStatus reducer', () => {
 	it('on SET_GAME_SELECTED should update gameName if name is passed', () => {
 		let actual = reducer(undefined, actions.setGameSelected('lorem')),
 			expected = new Map({
-				game: 'lorem',
+				game: 'lorem'
 			});
 
 		expect(actual).toEqual(expected);
